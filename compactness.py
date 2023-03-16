@@ -20,24 +20,22 @@ import connect_census as cen
 
 ##
 
+##first on the to do list: where are we storing the outputs of each script and how are we pulling them into the next script?
 #pull user input from virtual directory
 #write files to a temp folder?
 
 #read in user inputted file
 shp = gpd.read_file("data/SHP/pa_vtd_2020_bound.shp", crs="4269")
 
-shp_fn = "data/SHP/pa_vtd_2020_bound.shp"
 
-
+#second on the to do list:
+##ask user to specify as parameter which measure they want
 ##make function able to accept a list of files
-
-#ask user to specify as parameter which measure they want
 
 
 #########OUTPUT
 ## minimum or average or both compactness scores
 ## minimum because targetting in specific districts
-
 
 
 def userDefMeasure(user_input, fn):
