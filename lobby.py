@@ -4,7 +4,7 @@ Created on Tue Feb 14 07:41:49 2023
 
 @author: joshu
 """
-
+import compactness_measures as cm
 import  tkinter as tk
 from tkinter import filedialog
 import pandas as pd
@@ -49,6 +49,8 @@ def csv_df_builder(file):
     csv_df = pd.DataFrame(input_file)
     shp_df = gpd.read_file(shp_files[0])
     df = shp_df.merge(csv_df, on='GEOID20')
+    pp_score = cm.polsby_popper(df)
+    print(pp_score)
     gpd.GeoDataFrame.to_file(df, filename= "./data/" + name + "_gdf.shp")
 
 def shp_df_builder(file):
@@ -67,8 +69,8 @@ def vtd_download(csv_fp20):
     r = requests.get(url)
     z = zipfile.ZipFile(io.BytesIO(r.content))
     z.extractall(path='./data/')
-    shp_files = glob.glob(path + '*/data/*.shp')    
-    shp_df = gpd.read_file(shp_files[0])
+    global shp_files
+    shp_files = glob.glob(path + './*.shp') 
 
     
 root = tk.Tk()
@@ -76,8 +78,8 @@ root.withdraw()
 path = filedialog.askdirectory()
 
 
-csv_files = glob.glob(path + '/*.csv')
-shp_files = glob.glob(path + '/*.shp')
+csv_files = glob.glob(path + './*.csv')
+shp_files = glob.glob(path + './*.shp')
 #create empty list for shp_fp20s
 shp_fp20_list = []
 #create empty list for fp20s
