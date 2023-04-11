@@ -11,12 +11,12 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import geopandas as gpd
 import numpy as np
-import pygris as pg
+#import pygris as pg
 
 
 #pull table user inputted
-csv = pd.read_csv("C:/Users/tup48123/Documents/ApplicationDevelopment/Project/data/precinct-assignments-cut.csv")
-shp = pg.voting_districts(state = str(state_id), cb = True, cache = True, year = 2020)
+# csv = pd.read_csv("C:/Users/tup48123/Documents/ApplicationDevelopment/Project/data/precinct-assignments-cut.csv")
+# shp = pg.voting_districts(state = str(state_id), cb = True, cache = True, year = 2020)
 
 ###IF user does not input shapefile or geodataframe:
 
@@ -47,7 +47,7 @@ def merge_user_inputs(csv, shp):
     geoid_shp = geoid_shp[0]
     
     #merge user input
-    map_merged = shp.merge(csv, on = geoid_shp)
+    map_merged = shp.merge(csv, left_on = geoid_shp, right_on=geoid_csv)
 
     # fig, ax = plt.subplots(1, figsize=(12, 12))
     # ax.axis('off')
@@ -70,4 +70,4 @@ def merge_user_inputs(csv, shp):
     return aggregated_polygons
 
 
-merge_user_inputs(csv, shp)
+# merge_user_inputs(csv, shp)

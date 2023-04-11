@@ -1,5 +1,12 @@
 # -*- coding: utf-8 -*-
 """
+Created on Tue Apr  4 20:03:52 2023
+
+@author: tuq05079
+"""
+
+# -*- coding: utf-8 -*-
+"""
 @author: claire
 """
 
@@ -10,10 +17,10 @@ import pandas as pd
 import statistics as s
 
 #set virtual directory
-os.chdir("C:/Users/tup48123/Documents/ApplicationDevelopment/Project")
+# os.chdir("C:/Users/tup48123/Documents/ApplicationDevelopment/Project")
 
 # Importing module from github
-sys.path.insert(1, "C:/Users/tup48123/Documents/ApplicationDevelopment/Project")
+# sys.path.insert(1, "C:/Users/tup48123/Documents/ApplicationDevelopment/Project")
 import compactness_measures as cm #only use base name of file
 
 ##
@@ -22,11 +29,11 @@ import compactness_measures as cm #only use base name of file
 #write files to a temp folder?
 
 #read in user inputted file
-shp = gpd.read_file("data/SHP/pa_vtd_2020_bound.shp", crs="4269")
+# shp = gpd.read_file("data/SHP/pa_vtd_2020_bound.shp", crs="4269")
 
-user_input = ["Polsby Popper","Schwartzberg", "Convex Hull Ratio"]
+# user_input = ["Polsby Popper","Schwartzberg", "Convex Hull Ratio"]
 
-user_input = ["Polsby Popper","Schwartzberg", "Convex Hull Ratio", "Reock"]
+# user_input = ["Polsby Popper","Schwartzberg", "Convex Hull Ratio", "Reock"]
 
 
 #########OUTPUT
@@ -85,4 +92,12 @@ def compact(measures, geo_df):
 #%%
     
     
-c = compact(user_input, shp)
+# c = compact(user_input, shp)
+def main():
+    # Typical uses for main are to run or call a test or to run a 
+    # significant or commonly used function from the command line
+
+    if __name__ == "__main__":
+        main()
+    else:
+        pass

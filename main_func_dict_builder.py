@@ -1,9 +1,4 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Apr  4 20:00:36 2023
 
-@author: tuq05079
-"""
 from merge_txt_shp import merge_user_inputs
 from compactness import compact 
 import pandas as pd
@@ -11,12 +6,12 @@ import numpy as np
 import geopandas as gpd
 from election_2020 import election_2020
 from historic_election_data import historic_df_builder
-import partisan_fairness as pf
+from fairness import fairness
 import os
 import glob
 import warnings
 
-warnings.filterwarnings("ignore")
+# warnings.filterwarnings("ignore")
 
 wd = os.getcwd()
 
@@ -35,24 +30,26 @@ user_input = ["Polsby Popper","Schwartzberg", "Convex Hull Ratio", "Reock"]
 dict_of_dicts = {}
 
 for plan in plans:
-    
+    #read path and convert to dataframe
+    opened_csv = pd.read_csv(plan)
+    #get plan names for index
     dict_of_dicts_key= os.path.basename(plan)
-    
-    geo_df= merge_user_inputs(plan, shp)
+    #merge csv to shapefile
+    geo_df= merge_user_inputs(opened_csv, shp)
 
     #put each function outputs in a list
     #measure_functions = list(compact(plan), fairness(plan))
     dict_outputs= {}
-    dict_compact= compact(geo_df) #output is a dictionary for each plan
-    dict_fairness= pf.fairness(plan) #output is a dictionary for each plan
+    dict_compact= compact(user_input, geo_df) #output is a dictionary for each plan
+    dict_fairness= fairness(plan) #output is a dictionary for each plan
     
-    dict_outputs = dict_compact.update(dict_fairness) 
+    dict_compact.update(dict_fairness) 
     
     #create inner dictionary to join to dict of dicts
     inner_dict = {}
     
-    values_test = list(dict_outputs.values())
-    keys_test = list(dict_outputs.keys())
+    values_test = list(dict_compact.values())
+    keys_test = list(dict_compact.keys())
     
     
     for plan_index in range(len(values_test)):
@@ -61,7 +58,8 @@ for plan in plans:
         
         dict_of_dicts[f'{dict_of_dicts_key}']= inner_dict
         
-        
+ 
+
  ####main function for 1 measure to create a dict of dicts
 #this one works       
 # for plan in plans:  
