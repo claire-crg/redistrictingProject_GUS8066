@@ -23,7 +23,7 @@ class UI(QWidget):
         #find children
 
         self.checkBoxes = [self.pp_box, self.schwartzberg_box, self.c_hull_box,
-                           self.reock_box, self.eg_box, self.mmd_box, self.eg_box]
+                           self.reock_box, self.eg_box, self.mmd_box, self.lmt_box]
         
         button = self.findChild(QPushButton, 'compare_button') 
         button.clicked.connect(self.launch_tests)        
@@ -54,13 +54,12 @@ class UI(QWidget):
             return pp_test
             
     def launch_tests(self):
-        on_list = []
+
         # for box in self.checkBoxes:
         #     if self.checkState() == 2:
         #         on_list.append(self.checkBox.text)                
         self.on_state_changed()
-        print(on_list)
-        print('Button Clicked')
+
         window.close()
 
         
