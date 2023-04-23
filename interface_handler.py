@@ -8,7 +8,10 @@ import sys
 import os
 
 cwd = os.getcwd()
-report=[]
+user_input=[]
+plan=[]
+shape=[]
+historic =[]
 
 class UI(QWidget):
     def __init__(self):
@@ -31,36 +34,38 @@ class UI(QWidget):
     def on_state_changed(self):
         for self.checkBox in self.checkBoxes:
             if self.checkBox.isChecked() == True:
-                report.append(self.checkBox.text())
+                user_input.append(self.checkBox.text())
             # print(self.checkBox.text() + str(self.checkBox.isChecked()))
               
     def browse_plan_box(self):
         self.plan_path = QFileDialog.getExistingDirectory(self)
         self.plan_text.setText(self.plan_path)
-        report.append(self.plan_path)
+        plan.append(self.plan_path)
     def browse_shape_box(self):
         self.shape_file = QFileDialog.getOpenFileName(self)
         self.shape_text.setText(self.shape_file[0])
-        report.append(self.shape_file[0])
+        shape.append(self.shape_file[0])
     def browse_historic_box(self):
         self.historic_file = QFileDialog.getOpenFileName(self)
         self.historic_text.setText(self.historic_file[0])
-        report.append(self.historic_file[0])
+        historic.append(self.historic_file[0])
     
-    def tests(self):
-        if self.pp_box.isChecked():
-            pp_test = self.pp_box.text()
-            print(pp_test)
-            return pp_test
+    # def tests(self):
+    #     if self.pp_box.isChecked():
+    #         pp_test = self.pp_box.text()
+    #         print(pp_test)
+    #         return pp_test
             
     def launch_tests(self):
-
+        user_input.append(plan)
+        user_input.append(shape)
+        user_input.append(historic)
         # for box in self.checkBoxes:
         #     if self.checkState() == 2:
         #         on_list.append(self.checkBox.text)                
         self.on_state_changed()
-
         window.close()
+        
 
         
 app = QApplication(sys.argv)
