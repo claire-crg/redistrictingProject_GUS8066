@@ -15,6 +15,21 @@ import geopandas as gpd
 shp = gpd.read_file("C:/Users/tup48123/Documents/ApplicationDevelopment/Project/data/SHP/pa_vtd_2020_bound.shp", crs="4269")
 
 
+#get population column
+#gdf can either be usre inputted gdf or gdf from census
+def get_pop_col(user_input_pop_col, gdf):
+    ##if from census api pull, I defined the column myself :)
+    if 'tot_pop' in gdf.columns:
+        pop_col = 'tot_pop'
+    #I am assuming user_input_pop_col will be a list with 1 value
+    elif user_input_pop_col[0] in gdf.columns:
+        pop_col = user_input_pop_col[0]
+    else:
+        print("Can't find the population column")
+    
+    return pop_col
+
+
 # see if population is equal in each polygon
 
 def equal_population(gdf, pop_column):
@@ -23,7 +38,7 @@ def equal_population(gdf, pop_column):
     d = {}
     
     #make sure it is passed as a string
-    pop_column = str(pop_column)
+    pop_column = str(get_pop_col(pop_column, gdf))
 
     # initialize a variable to keep track of the previous value
     prev_value = None
@@ -62,18 +77,6 @@ def pop_difference(gdf, pop_column):
 
         # calculate and return the range
         d['pop_range_value'] = max_value - min_value
-
-    # return d
-
-# if state legislative maps,
-# population must be exactly equal, allowance to be off by 1 or 2 people
-
-
-# def pop_difference_legislative(gdf):
-
-#     equality = equal_population(gdf)
-    
-#     d={}
 
     # if equality['equal_pop'] == 'No':
         tot_pop = gdf[pop_column].sum()
