@@ -17,6 +17,9 @@ geo_list =['County', 'County Subdivision', 'Place', 'Tract', 'Voting District']
 user_geo = []
 user_pop = []
 pop_column_options = []
+compactness_tests = ['Polsby-Popper', 'Schwartzberg', 'Convex Hull Ratio', 'Reock'] 
+fairness_tests = ['Efficiency Gap', 'Mean-Median Difference', 'Lopsided-Margins Test']
+population_tests = ['Equal Population']
 
 class UI(QWidget):
     def __init__(self):
@@ -103,7 +106,8 @@ class UI(QWidget):
         print(f"user_geo = {user_geo}")        
         print('still running')
         sys.exit()
-        
+        # if any(test in user_input for test in fairness_tests) == True:
+            
         
 
         
