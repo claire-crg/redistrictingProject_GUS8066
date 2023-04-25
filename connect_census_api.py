@@ -13,8 +13,9 @@ import matplotlib.pyplot as plt
 import requests
 import geopandas as gpd
 import numpy as np
-from get_column_info import get_dist_col, get_state_geoid, get_dist_col
-
+from get_column_info import get_dist_col
+from get_column_info import get_state_geoid
+from get_column_info import get_dist_col
 
 #load files to test functions
 user_txt = pd.read_csv("C:/Users/tup48123/Documents/ApplicationDevelopment/Project/data/precinct-assignments-cut.csv")
@@ -158,7 +159,7 @@ def merge_cendata_geo(data_merged, geo_data):
 def agg_geo(data_merged, geo_data, user_txt):
     #merge census data to geography
     geo = merge_cendata_geo(data_merged, geo_data)
-    
+
     #get the assignments column from the user txt file
     districts = get_dist_col(user_txt)
     

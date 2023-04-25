@@ -17,9 +17,9 @@ from get_column_info import get_dist_col, get_state_geoid, get_dist_col
 
 
 #pull table user inputted
-csv = pd.read_csv("C:/Users/tup48123/Documents/ApplicationDevelopment/Project/data/precinct-assignments-cut.csv")
+csv = pd.read_csv("C:/Users/tup48123/Documents/ApplicationDevelopment/Project/data/precinct-assignments.csv")
 #shp = pg.voting_districts(state = str(state_id), cb = True, cache = True, year = 2020)
-geo_gdf = gpd.read_file("C:/Users/tup48123/Documents/ApplicationDevelopment/Project/data/SHP/pa_vtd_2020_bound.shp")
+geo_gdf = gpd.read_file("C:/Users/tup48123/Documents/ApplicationDevelopment/Project/data/vtd_gdf.gpkg")
 
 ###IF user provides a shapefile, use the merge_user_inputs function
 

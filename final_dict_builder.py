@@ -25,11 +25,11 @@ import connect_census_api
 wd = os.getcwd()
 
 path = wd
-# plans = glob.glob(os.path.join(path + "/data/plans/*.csv"))
-plans = ["C:/Users/tup48123/Documents/ApplicationDevelopment/redistrictingProject_GUS8066-main/data/new_plan.csv",
-"C:/Users/tup48123/Documents/ApplicationDevelopment/redistrictingProject_GUS8066-main/data/pa_no_splits.csv",
-"C:/Users/tup48123/Documents/ApplicationDevelopment/redistrictingProject_GUS8066-main/data/precinct-assignments.csv",
-"C:/Users/tup48123/Documents/ApplicationDevelopment/redistrictingProject_GUS8066-main/data/under_max_competitive.csv"]
+plans = glob.glob(os.path.join(path + "/data/plans/*.csv"))
+# plans = ["C:/Users/tup48123/Documents/ApplicationDevelopment/redistrictingProject_GUS8066-main/data/new_plan.csv",
+# "C:/Users/tup48123/Documents/ApplicationDevelopment/redistrictingProject_GUS8066-main/data/pa_no_splits.csv",
+# "C:/Users/tup48123/Documents/ApplicationDevelopment/redistrictingProject_GUS8066-main/data/precinct-assignments.csv",
+# "C:/Users/tup48123/Documents/ApplicationDevelopment/redistrictingProject_GUS8066-main/data/under_max_competitive.csv"]
 
 gdf = gpd.read_file('C:/Users/tup48123/Documents/ApplicationDevelopment/Project/data/SHP/pa_vtd_2020_bound.shp')
 
