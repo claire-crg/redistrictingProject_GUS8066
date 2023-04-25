@@ -34,3 +34,17 @@ def get_dist_col(user_txt):
     district_csv = district_col[district_col].index[0]
     
     return district_csv
+
+
+def get_gdf_geoid(user_gdf, user_txt):
+    #get state id
+    state_id = get_state_geoid(user_txt)[1]
+    #find the column with GEOID
+    geoid_col_shp = user_gdf.applymap(lambda x: len(str(x)) > 4 and str(x).startswith(str(state_id))).all()
+    geoid_shp = geoid_col_shp[geoid_col_shp].index[0]
+    
+    return geoid_shp
+
+
+
+
