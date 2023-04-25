@@ -93,11 +93,11 @@ def compact(measures, geo_df):
     
     
 # c = compact(user_input, shp)
-def main():
+#def main():
     # Typical uses for main are to run or call a test or to run a 
     # significant or commonly used function from the command line
 
-    if __name__ == "__main__":
-        main()
-    else:
-        pass
+ #   if __name__ == "__main__":
+  #      main()
+   # else:
+    #    pass
