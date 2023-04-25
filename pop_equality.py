@@ -65,8 +65,12 @@ def equal_population(gdf, pop_column):
 def pop_difference(gdf, pop_column):
     
     #make sure it is passed as a string
-    pop_column = str(pop_column)
-
+    pop_column = pop_column[0]
+    
+    #make sure population is integer
+    gdf[pop_column] = gdf[pop_column].apply(lambda x: int(x))
+    
+    #see if population is equal
     equality = equal_population(gdf, pop_column)
     
     d={}

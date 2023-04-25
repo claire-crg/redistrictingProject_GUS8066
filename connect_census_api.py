@@ -29,7 +29,7 @@ def get_geo(user_geo_type, user_txt):
     #get geoid from user file
     user_geoid= get_state_geoid(user_txt)
     #geoid from user inputted txt file
-    geoid = user_geoid[0]
+    geoid_user = user_geoid[0]
     #state id from geoid
     state_id = user_geoid[1]
             
@@ -52,7 +52,12 @@ def get_geo(user_geo_type, user_txt):
     else:
         print("Geography not given")
     
-    return geo, user_geo_type, geoid
+    #get geoid from census geography
+    x = [col for col in geo.columns if "GEOID" in col]
+    for col in x:
+        geoid_cen = [col for row in geo[col] if row.startswith(str(state_id))]
+    
+    return geo, user_geo_type, geoid_user, geoid_cen[0]
     
 
 
@@ -115,6 +120,8 @@ def join_cen_assgn(user_txt, geo_data, user_geo_type):
     geoid_user_txt = geo_data[2]
     
     ##get geoid from census data
+    geoid_cen = geo_data[3]
+    
     #get level name
     geo_level = geo_data[1][0].lower()
     
@@ -133,24 +140,27 @@ def merge_cendata_geo(data_merged, geo_data):
     
     #get shapes from census
     geo = gpd.GeoDataFrame(geo_data[0], geometry='geometry')
-    
+        
     #geoid from user text
     geoid_user_txt = geo_data[2]
     
+    #geoid from cen geo
+    geoid_cen = geo_data[3]
+        
     ##merge user input
     
     #check for leading 0s
     #geoid from census shapefile should match 
-    max_len_user = max(data_merged[geoid_user_txt].apply(len))
-    max_len_cen = max(geo[geoid_user_txt].apply(len))
+    max_len_user = max(data_merged['GEOID'].apply(len))
+    max_len_cen = max(geo[geoid_cen].apply(len))
     
     # #add leading zeros if necessary
     if max_len_user == max_len_cen:
-        data_merged[geoid_user_txt] = data_merged[geoid_user_txt].apply(lambda x: str(x).zfill(max_len_user))
-        geo[geoid_user_txt] = geo[geoid_user_txt].apply(lambda x: str(x).zfill(max_len_user))
+        data_merged[geoid_user_txt] = data_merged['GEOID'].apply(lambda x: str(x).zfill(max_len_user))
+        geo[geoid_cen] = geo[geoid_cen].apply(lambda x: str(x).zfill(max_len_cen))
 
     #merge user text input to gdf from census
-    geo_merged = geo.merge(data_merged, on = geoid_user_txt)
+    geo_merged = geo.merge(data_merged, left_on = geoid_cen, right_on = 'GEOID')
     # geo_merged = geo.merge(data_merged, on = str(geoid_user_txt))
     
     return geo_merged
@@ -173,8 +183,7 @@ def agg_geo(data_merged, geo_data, user_txt):
         if i in col_names:
             geo[i] = geo[i].apply(lambda x: int(x))
         
-    grouped_data = geo.groupby(districts)[['tot_pop', 'hispLat_pop', 'white_pop', 'black_pop',
-    'asian_pop']].sum()
+    grouped_data = geo.groupby(districts)[col_names].sum()
     
     ##merge aggregated data to grouped polygons
     # grouped_polygons = gpd.GeoDataFrame(grouped_polygons, geometry='geometry')

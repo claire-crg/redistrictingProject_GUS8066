@@ -17,10 +17,10 @@ from get_column_info import get_dist_col, get_state_geoid, get_dist_col
 
 
 #pull table user inputted
-csv = pd.read_csv("C:/Users/tup48123/Documents/ApplicationDevelopment/Project/data/precinct-assignments.csv")
+# csv = pd.read_csv("C:/Users/tup48123/Documents/ApplicationDevelopment/Project/data/precinct-assignments.csv")
 #shp = pg.voting_districts(state = str(state_id), cb = True, cache = True, year = 2020)
-geo_gdf = gpd.read_file("C:/Users/tup48123/Documents/ApplicationDevelopment/Project/data/vtd_gdf.gpkg")
-
+# geo_gdf = gpd.read_file("C:/Users/tup48123/Documents/ApplicationDevelopment/Project/data/vtd_gdf.gpkg")
+#
 ###IF user provides a shapefile, use the merge_user_inputs function
 
 
@@ -41,26 +41,32 @@ def merge_user_inputs(user_txt, geo_gdf, user_input_pop_col):
     ##find GEOID for shapefile user input
     geoid_col_shp = geo_gdf.applymap(lambda x: len(str(x)) > 4 and str(x).startswith(str(state_id))).all()
     geoid_shp = geoid_col_shp[geoid_col_shp].index[0]
-    
+        
     #merge user input
-    map_merged = geo_gdf.merge(user_txt, on = geoid_shp)
-    
-
-    # fig, ax = plt.subplots(1, figsize=(12, 12))
-    # ax.axis('off')
-    # vtd_merged.plot(linewidth=0.5, ax=ax, edgecolor='0.2')
-    # plt.show()
+    map_merged = geo_gdf.merge(user_txt, left_on = geoid_shp, right_on=geoid_csv)
 
     ##aggregate
     #get pop column
     pop_col = get_pop_col(user_input_pop_col[0], geo_gdf)
+    
     #group data by district
-    grouped_data = geo_gdf.groupby(district_csv)[pop_col].sum()
+    #make sure data columns are integers
+    list_data = ['tot_pop', 'hispLat_pop', 'white_pop', 'black_pop', 'asian_pop']
+    for i in map_merged.columns:
+        if i in list_data:
+            map_merged[i] = map_merged[i].apply(lambda x: int(x))
+    #now group
+    grouped_data = map_merged.groupby(district_csv)[list_data].sum()
     
     # Group the polygons by a column with shared data
+    #first remove the demographic data so it will not be duplicated after we add the aggregated data
+    cols_to_select = ~map_merged.columns.isin(list_data)
+    map_merged = map_merged.loc[:, cols_to_select]
+    
+    #group
     grouped_polygons = map_merged.dissolve(by= district_csv, as_index = False)
-    # grouped_polygons = map_merged.groupby(district_csv)['geometry'].agg(lambda x: gpd.GeoSeries(x).unary_union)
-     
+    #grouped_polygons = map_merged.groupby(district_csv)['geometry'].agg(lambda x: gpd.GeoSeries(x).unary_union)
+
     #merge grouped data to grouped polygons
     grouped_polygons = pd.merge(grouped_polygons, grouped_data, how='inner', on=district_csv).reset_index()
 
@@ -68,14 +74,7 @@ def merge_user_inputs(user_txt, geo_gdf, user_input_pop_col):
     aggregated_polygons = gpd.GeoDataFrame(grouped_polygons,
                                            geometry="geometry",
                                            crs=map_merged.crs)
-    
-    # fig, ax = plt.subplots(1, figsize=(12, 12))
-    # ax.axis('off')
-    # aggregated_polygons.plot(linewidth=0.5, ax=ax, edgecolor='0.2')
-    # plt.show()
-    
     return aggregated_polygons
 
-
-test1 = merge_user_inputs(opened_csv, test, user_pop)
+# test1 = merge_user_inputs(opened_csv, gdf, user_pop)
 

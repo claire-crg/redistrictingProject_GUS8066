@@ -12,7 +12,7 @@ import pandas as pd
 import geopandas as gpd
 # from election_2020 import election_2020
 # from historic_election_data import historic_df_builder
-# from fairness import fairness
+from fairness import fairness
 import os
 import glob
 # import warnings
@@ -26,19 +26,19 @@ wd = os.getcwd()
 
 path = wd
 plans = glob.glob(os.path.join(path + "/data/plans/*.csv"))
-# plans = ["C:/Users/tup48123/Documents/ApplicationDevelopment/redistrictingProject_GUS8066-main/data/new_plan.csv",
-# "C:/Users/tup48123/Documents/ApplicationDevelopment/redistrictingProject_GUS8066-main/data/pa_no_splits.csv",
-# "C:/Users/tup48123/Documents/ApplicationDevelopment/redistrictingProject_GUS8066-main/data/precinct-assignments.csv",
-# "C:/Users/tup48123/Documents/ApplicationDevelopment/redistrictingProject_GUS8066-main/data/under_max_competitive.csv"]
+plans = ["C:/Users/tup48123/Documents/ApplicationDevelopment/redistrictingProject_GUS8066-main/data/new_plan.csv",
+"C:/Users/tup48123/Documents/ApplicationDevelopment/redistrictingProject_GUS8066-main/data/pa_no_splits.csv",
+"C:/Users/tup48123/Documents/ApplicationDevelopment/redistrictingProject_GUS8066-main/data/precinct-assignments.csv",
+"C:/Users/tup48123/Documents/ApplicationDevelopment/redistrictingProject_GUS8066-main/data/under_max_competitive.csv"]
 
-gdf = gpd.read_file('C:/Users/tup48123/Documents/ApplicationDevelopment/Project/data/SHP/pa_vtd_2020_bound.shp')
+gdf = gpd.read_file('C:/Users/tup48123/Documents/ApplicationDevelopment/Project/data/vtd_gdf.gpkg')
 
 user_input = ["Polsby Popper","Schwartzberg", "Convex Hull Ratio", "Reock"]
 
 
 # plan = pd.read_csv("./data/pa_no_splits.csv")
 
-user_input=[]
+# user_input=[]
 plan=[]
 shape=[]
 historic =[]
@@ -47,7 +47,6 @@ user_geo = ['Voting District']
 user_pop = ['tot_pop']
 pop_column_options = []
 
-test = final_dict_builder(plans, shape)
 
 def final_dict_builder(plans_folder, *args):
     ######main function calling all functions
@@ -63,17 +62,19 @@ def final_dict_builder(plans_folder, *args):
         geo_df=None
         if len(shape) > 0:
         # ##merge csv to shapefile
-            geo_df= merge_user_inputs(opened_csv, test, user_pop)
+            geo_df= merge_user_inputs(opened_csv, gdf, user_pop)
         else:
             geo_df= census_gdf_data(opened_csv, user_geo)
     
         #calculate measures
         # dict_outputs= {}
-        dict_compact= compact(user_input, test) #output is a dictionary for each plan
-        #dict_fairness= fairness(plan) #output is a dictionary for each plan
-        dict_equal_pop = pop_difference(test, pop_column)
+        dict_compact= compact(user_input, geo_df) #output is a dictionary for each plan
+        dict_fairness= fairness(plan) #output is a dictionary for each plan
+        dict_equal_pop = pop_difference(geo_df, user_pop)
         
-        dict_compact.update(dict_fairness) 
+        
+        dict_compact.update(dict_fairness)
+        dict_compact.update(dict_equal_pop)
         
         #create inner dictionary to join to dict of dicts
         inner_dict = {}
@@ -86,11 +87,11 @@ def final_dict_builder(plans_folder, *args):
     
             inner_dict[keys_test[plan_index]] = values_test[plan_index]
             
-            dict_of_dicts[f'{dict_of_dicts_key}']= inner_dict
+            dict_of_dicts[f'{dict_of_dicts_key}'] = inner_dict
             
     return dict_of_dicts
 
-test = final_dict_builder(plans, shp, user_input, pop_column="tot_pop")
+test = final_dict_builder(plans, gdf, user_input, user_pop)
 
  ####main function for 1 measure to create a dict of dicts
 #this one works       
