@@ -22,23 +22,19 @@ import connect_census_api
 
 # warnings.filterwarnings("ignore")
 
-wd = os.getcwd()
+# wd = os.getcwd()
 
-path = wd
-plans = glob.glob(os.path.join(path + "/data/plans/*.csv"))
-plans = ["C:/Users/tup48123/Documents/ApplicationDevelopment/redistrictingProject_GUS8066-main/data/new_plan.csv",
-"C:/Users/tup48123/Documents/ApplicationDevelopment/redistrictingProject_GUS8066-main/data/pa_no_splits.csv",
-"C:/Users/tup48123/Documents/ApplicationDevelopment/redistrictingProject_GUS8066-main/data/precinct-assignments.csv",
-"C:/Users/tup48123/Documents/ApplicationDevelopment/redistrictingProject_GUS8066-main/data/under_max_competitive.csv"]
+# path = wd
+# plans = glob.glob(os.path.join(path + "/data/plans/*.csv"))
+# # plans = ["C:/Users/tup48123/Documents/ApplicationDevelopment/redistrictingProject_GUS8066-main/data/new_plan.csv",
+# # "C:/Users/tup48123/Documents/ApplicationDevelopment/redistrictingProject_GUS8066-main/data/pa_no_splits.csv",
+# # "C:/Users/tup48123/Documents/ApplicationDevelopment/redistrictingProject_GUS8066-main/data/precinct-assignments.csv",
+# # "C:/Users/tup48123/Documents/ApplicationDevelopment/redistrictingProject_GUS8066-main/data/under_max_competitive.csv"]
 
-gdf = gpd.read_file('C:/Users/tup48123/Documents/ApplicationDevelopment/Project/data/vtd_gdf.gpkg')
+# gdf = gpd.read_file('C:/Users/tup48123/Documents/ApplicationDevelopment/Project/data/vtd_gdf.gpkg')
+
 
 user_input = ["Polsby Popper","Schwartzberg", "Convex Hull Ratio", "Reock"]
-
-
-# plan = pd.read_csv("./data/pa_no_splits.csv")
-
-# user_input=[]
 plan=[]
 shape=[]
 historic =[]
