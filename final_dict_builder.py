@@ -22,27 +22,12 @@ from lobby_new import csv_check
 from lobby_new import check_cols_match
 # warnings.filterwarnings("ignore")
 
-# wd = os.getcwd()
-
-wd_path = r'C:/Users/tup48123/Documents/ApplicationDevelopment/redistrictingProject_GUS8066-main'
-path = os.path.join(wd_path + "/data/*.csv")
-plans = glob.glob(path)
-
-
-gdf = gpd.read_file('C:/Users/tup48123/Documents/ApplicationDevelopment/Project/data/vtd_gdf.gpkg')
-
-
-user_input = ["Polsby Popper","Schwartzberg", "Convex Hull Ratio", "Reock"]
-plan=[]
-shape=[]
-historic =[]
-geo_list =['County', 'County Subdivision', 'Place', 'Tract', 'Voting District']
-user_geo = ['Voting District']
-user_pop = ['tot_pop']
-pop_column_options = []
-
 
 def final_dict_builder(plans_folder, *args):
+    wd = os.getcwd()
+    path = os.path.join(wd_path + "/data/*.csv")
+    plans = glob.glob(path)
+
     ######main function calling all functions
     dict_of_dicts = {}
     
@@ -101,23 +86,3 @@ def final_dict_builder(plans_folder, *args):
             
     return dict_of_dicts
 
-test = final_dict_builder(plans, gdf, user_input, user_pop)
-
- ####main function for 1 measure to create a dict of dicts
-#this one works       
-# for plan in plans:  
-
-#     key= os.path.basename(plan)
-     
-#     inner_dict = {}
-    
-#     test=fairness(plan)
-        
-#     values_test = list(test.values())
-#     keys_test = list(test.keys())
-    
-#     for plan_index in range(len(values_test)):
-
-#         inner_dict[keys_test[plan_index]] = values_test[plan_index]
-        
-#         dict_of_dicts[f'{key}']= inner_dict
