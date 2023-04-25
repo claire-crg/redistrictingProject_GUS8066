@@ -18,9 +18,9 @@ from get_column_info import get_state_geoid
 from get_column_info import get_dist_col
 
 #load files to test functions
-user_txt = pd.read_csv("C:/Users/tup48123/Documents/ApplicationDevelopment/Project/data/precinct-assignments-cut.csv")
+# user_txt = pd.read_csv("C:/Users/tup48123/Documents/ApplicationDevelopment/Project/data/precinct-assignments-cut.csv")
 #user_geo_type is the list generated from the user input in the GUI
-user_geo_type = ['Voting District']   
+# user_geo_type = ['Voting District']   
 
 
 #get geography type for building blocks to create voting districts
@@ -139,7 +139,7 @@ def join_cen_assgn(user_txt, geo_data, user_geo_type):
 def merge_cendata_geo(data_merged, geo_data):
     
     #get shapes from census
-    geo = gpd.GeoDataFrame(geo_data[0], geometry='geometry')
+    geo = gpd.GeoDataFrame(geo_data[0], geometry='geometry', crs='WGS84')
         
     #geoid from user text
     geoid_user_txt = geo_data[2]
@@ -207,4 +207,4 @@ def census_gdf_data(user_txt, user_geo_type):
 
     return agg_poly
 
-#test= census_gdf_data(opened_csv, user_geo_type)
+# test= census_gdf_data(opened_csv, user_geo_type)

@@ -18,20 +18,18 @@ import glob
 # import warnings
 from pop_equality import pop_difference
 from connect_census_api import census_gdf_data
-import connect_census_api
-
+from lobby_new import csv_check
+from lobby_new import check_cols_match
 # warnings.filterwarnings("ignore")
 
 # wd = os.getcwd()
 
-# path = wd
-# plans = glob.glob(os.path.join(path + "/data/plans/*.csv"))
-# # plans = ["C:/Users/tup48123/Documents/ApplicationDevelopment/redistrictingProject_GUS8066-main/data/new_plan.csv",
-# # "C:/Users/tup48123/Documents/ApplicationDevelopment/redistrictingProject_GUS8066-main/data/pa_no_splits.csv",
-# # "C:/Users/tup48123/Documents/ApplicationDevelopment/redistrictingProject_GUS8066-main/data/precinct-assignments.csv",
-# # "C:/Users/tup48123/Documents/ApplicationDevelopment/redistrictingProject_GUS8066-main/data/under_max_competitive.csv"]
+wd_path = r'C:/Users/tup48123/Documents/ApplicationDevelopment/redistrictingProject_GUS8066-main'
+path = os.path.join(wd_path + "/data/*.csv")
+plans = glob.glob(path)
 
-# gdf = gpd.read_file('C:/Users/tup48123/Documents/ApplicationDevelopment/Project/data/vtd_gdf.gpkg')
+
+gdf = gpd.read_file('C:/Users/tup48123/Documents/ApplicationDevelopment/Project/data/vtd_gdf.gpkg')
 
 
 user_input = ["Polsby Popper","Schwartzberg", "Convex Hull Ratio", "Reock"]
@@ -48,16 +46,32 @@ def final_dict_builder(plans_folder, *args):
     ######main function calling all functions
     dict_of_dicts = {}
     
+    #check if list of plans is correct
+    csv_check(plans)
+    
+    #open geography file as a gdf
+    gdf = None
+    if len(shape) > 0:
+        gdf = gpd.read_file(shape[0])
+    else:
+        print("No geography file provided, will pull from census API")
+    
     for plan in plans:
         #read path and convert to dataframe
         opened_csv = pd.read_csv(plan)
         #get plan names for index
         dict_of_dicts_key= os.path.basename(plan)
         
-        #if user inputed gdf
+        #merge gdf and df
         geo_df=None
+        #if user inputed gdf
         if len(shape) > 0:
-        # ##merge csv to shapefile
+        ##merge csv to shapefile
+            #get path for shapefile from shape list
+            gdf = shape[0]
+            #check if geoid columns match
+            check_cols_match(gdf, opened_csv)
+            #merge
             geo_df= merge_user_inputs(opened_csv, gdf, user_pop)
         else:
             geo_df= census_gdf_data(opened_csv, user_geo)
