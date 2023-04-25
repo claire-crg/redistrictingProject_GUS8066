@@ -8,9 +8,10 @@ import sys
 import os
 import geopandas as gpd
 from osgeo import ogr
+# from final_dict_builder import final_dict_builder
 
 user_input=[]
-plan=[]
+plans_folder=[]
 shape=[]
 historic =[]
 geo_list =['County', 'County Subdivision', 'Place', 'Tract', 'Voting District']
@@ -43,8 +44,8 @@ class UI(QWidget):
         self.checkBoxes = [self.pp_box, self.schwartzberg_box, self.c_hull_box,
                            self.reock_box, self.eg_box, self.mmd_box, self.lmt_box, self.population_box]
         
-        button = self.findChild(QPushButton, 'compare_button') 
-        button.clicked.connect(self.launch_tests)        
+        # button = self.findChild(QPushButton, 'compare_button') 
+        self.compare_button.clicked.connect(self.launch_tests)        
         
     def on_state_changed(self):
         for self.checkBox in self.checkBoxes:
@@ -60,7 +61,7 @@ class UI(QWidget):
     def browse_plan_box(self):
         self.plan_path = QFileDialog.getExistingDirectory(self)
         self.plan_text.setText(self.plan_path)
-        plan.append(self.plan_path)
+        plans_folder.append(self.plan_path)
     def browse_shape_box(self):
         self.shape_file = QFileDialog.getOpenFileName(self)
         self.shape_text.setText(self.shape_file[0])
@@ -95,23 +96,24 @@ class UI(QWidget):
         # for box in self.checkBoxes:
         #     if self.checkState() == 2:
         #         on_list.append(self.checkBox.text)                
-        self.on_state_changed()
+        self.on_state_changed()   
         window.close()
         print(f"user_input = {user_input}")
-        print(f"plan = {plan}")
+        print(f"plans_folder = {plans_folder}")
         print(f"shape = {shape}")
         print(f"historic = {historic}")
         print(f"user pop = {user_pop}")
         print(f"pop_column_options = {pop_column_options}")
         print(f"user_geo = {user_geo}")        
         print('still running')
-        sys.exit()
+        # final_dict_builder(plans_folder[0], user_input)
         # if any(test in user_input for test in fairness_tests) == True:
             
         
 
-        
-app = QApplication(sys.argv)
-window = UI()
-window.show()
-sys.exit(app.exec_())
+if __name__ == '__main__':
+    import sys
+    app = QApplication(sys.argv)
+    window = UI()
+    window.show()
+    sys.exit(app.exec_())
