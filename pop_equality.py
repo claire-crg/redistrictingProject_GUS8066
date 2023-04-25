@@ -18,6 +18,7 @@ shp = gpd.read_file("C:/Users/tup48123/Documents/ApplicationDevelopment/Project/
 #get population column
 #gdf can either be usre inputted gdf or gdf from census
 def get_pop_col(user_input_pop_col, gdf):
+    pop_col=None
     ##if from census api pull, I defined the column myself :)
     if 'tot_pop' in gdf.columns:
         pop_col = 'tot_pop'

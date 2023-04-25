@@ -19,7 +19,7 @@ from get_column_info import get_dist_col, get_state_geoid, get_dist_col
 #pull table user inputted
 csv = pd.read_csv("C:/Users/tup48123/Documents/ApplicationDevelopment/Project/data/precinct-assignments-cut.csv")
 #shp = pg.voting_districts(state = str(state_id), cb = True, cache = True, year = 2020)
-shp = gpd.read_file("C:/Users/tup48123/Documents/ApplicationDevelopment/Project/data/SHP/pa_vtd_2020_bound.shp")
+geo_gdf = gpd.read_file("C:/Users/tup48123/Documents/ApplicationDevelopment/Project/data/SHP/pa_vtd_2020_bound.shp")
 
 ###IF user provides a shapefile, use the merge_user_inputs function
 
@@ -39,8 +39,7 @@ def merge_user_inputs(user_txt, geo_gdf, user_input_pop_col):
     district_csv = get_dist_col(user_txt)
     
     ##find GEOID for shapefile user input
-    geoid_col_shp = geo_gdf.applymap(lambda x: len(str(x)) > 4
-                                 and str(x).startswith(str(state_id))).all()
+    geoid_col_shp = geo_gdf.applymap(lambda x: len(str(x)) > 4 and str(x).startswith(str(state_id))).all()
     geoid_shp = geoid_col_shp[geoid_col_shp].index[0]
     
     #merge user input
@@ -54,16 +53,16 @@ def merge_user_inputs(user_txt, geo_gdf, user_input_pop_col):
 
     ##aggregate
     #get pop column
-    pop_col = get_pop_col(user_input_pop_col, geo_gdf)
+    pop_col = get_pop_col(user_input_pop_col[0], geo_gdf)
     #group data by district
-    grouped_data = geo_gdf.groupby(f'{district_csv}')[[f'{pop_col}']].sum()
+    grouped_data = geo_gdf.groupby(district_csv)[pop_col].sum()
     
     # Group the polygons by a column with shared data
-    # grouped_polygons = map_merged.dissolve(by= f'{district_csv}', as_index = False)
-    grouped_polygons = map_merged.groupby(f'{district_csv}')['geometry'].agg(lambda x: gpd.GeoSeries(x).unary_union)
+    grouped_polygons = map_merged.dissolve(by= district_csv, as_index = False)
+    # grouped_polygons = map_merged.groupby(district_csv)['geometry'].agg(lambda x: gpd.GeoSeries(x).unary_union)
      
     #merge grouped data to grouped polygons
-    grouped_polygons = pd.merge(grouped_polygons, grouped_data, how='inner', on=f'{district_csv}').reset_index()
+    grouped_polygons = pd.merge(grouped_polygons, grouped_data, how='inner', on=district_csv).reset_index()
 
     # Convert the grouped polygons to a GeoDataFrame
     aggregated_polygons = gpd.GeoDataFrame(grouped_polygons,
@@ -78,4 +77,5 @@ def merge_user_inputs(user_txt, geo_gdf, user_input_pop_col):
     return aggregated_polygons
 
 
-# test = merge_user_inputs(csv, shp)
+test1 = merge_user_inputs(opened_csv, test, user_pop)
+
