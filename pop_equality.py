@@ -11,9 +11,6 @@ import geopandas as gpd
 # identify which column is the population column
 # ask user to specify which column it is?
 
-#read in user inputted file
-shp = gpd.read_file("C:/Users/tup48123/Documents/ApplicationDevelopment/Project/data/SHP/pa_vtd_2020_bound.shp", crs="4269")
-
 
 #get population column
 #gdf can either be usre inputted gdf or gdf from census
@@ -114,13 +111,3 @@ def pop_difference(gdf, pop_column):
 
 
 
-
-
-# def pop_equality(gdf):
-#     a= equal_population(gdf)
-#     b= pop_difference_congressional(gdf)
-#     c= pop_difference_legislative(gdf)
-#     return a,b,c
-    
-    
-# test = pop_equality(shp)
