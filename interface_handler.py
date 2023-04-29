@@ -8,7 +8,7 @@ import sys
 import os
 import geopandas as gpd
 from osgeo import ogr
-# from final_dict_builder import final_dict_builder
+from final_dict_builder import final_dict_builder
 
 user_input=[]
 plans_folder=[]
@@ -44,24 +44,28 @@ class UI(QWidget):
         self.checkBoxes = [self.pp_box, self.schwartzberg_box, self.c_hull_box,
                            self.reock_box, self.eg_box, self.mmd_box, self.lmt_box, self.population_box]
         
-        # button = self.findChild(QPushButton, 'compare_button') 
+
         self.compare_button.clicked.connect(self.launch_tests)        
         
     def on_state_changed(self):
         for self.checkBox in self.checkBoxes:
             if self.checkBox.isChecked() == True:
                 user_input.append(self.checkBox.text())
-            # print(self.checkBox.text() + str(self.checkBox.isChecked()))
+
+
     def choose_geo(self):
         self.geo_choice = self.geo_combo.currentText()
         user_geo.append(self.geo_choice)        
+
     def choose_pop(self):
         self.pop_choice = self.pop_combo.currentText()
         user_pop.append(self.pop_choice)
+
     def browse_plan_box(self):
         self.plan_path = QFileDialog.getExistingDirectory(self)
         self.plan_text.setText(self.plan_path)
         plans_folder.append(self.plan_path)
+
     def browse_shape_box(self):
         self.shape_file = QFileDialog.getOpenFileName(self)
         self.shape_text.setText(self.shape_file[0])
@@ -85,29 +89,12 @@ class UI(QWidget):
         self.historic_text.setText(self.historic_file[0])
         historic.append(self.historic_file[0])
 
-    # def tests(self):
-    #     if self.pp_box.isChecked():
-    #         pp_test = self.pp_box.text()
-    #         print(pp_test)
-    #         return pp_test
             
-    def launch_tests(self):
-
-        # for box in self.checkBoxes:
-        #     if self.checkState() == 2:
-        #         on_list.append(self.checkBox.text)                
+    def launch_tests(self):             
         self.on_state_changed()   
         window.close()
-        print(f"user_input = {user_input}")
-        print(f"plans_folder = {plans_folder}")
-        print(f"shape = {shape}")
-        print(f"historic = {historic}")
-        print(f"user pop = {user_pop}")
-        print(f"pop_column_options = {pop_column_options}")
-        print(f"user_geo = {user_geo}")        
-        print('still running')
-        # final_dict_builder(plans_folder[0], user_input)
-        # if any(test in user_input for test in fairness_tests) == True:
+        final = final_dict_builder(plans_folder, shape, user_input, user_pop, user_geo)
+
             
         
 
