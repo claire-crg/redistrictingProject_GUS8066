@@ -15,12 +15,13 @@ import geopandas as gpd
 #get population column
 #gdf can either be usre inputted gdf or gdf from census
 def get_pop_col(user_input_pop_col, gdf):
+    
     pop_col=None
     ##if from census api pull, I defined the column myself :)
     if 'tot_pop' in gdf.columns:
         pop_col = 'tot_pop'
-    #I am assuming user_input_pop_col will be a list with 1 value
-    elif user_input_pop_col[0] in gdf.columns:
+    # user_input_pop_col will be a list with 1 value
+    elif len(user_input_pop_col)> 0 and user_input_pop_col[0] in gdf.columns:
         pop_col = user_input_pop_col[0]
     else:
         print("Can't find the population column")
@@ -61,27 +62,32 @@ def equal_population(gdf, pop_column):
 
 def pop_difference(gdf, pop_column):
     
-    #make sure it is passed as a string
-    pop_column = pop_column[0]
+    pop_col= None
+    #get pop column name
+    if len(pop_column) > 0:
+        #get population column from user input
+        pop_col = pop_column[0]
+    else:
+        pop_col = str(get_pop_col(pop_column, gdf))
     
     #make sure population is integer
-    gdf[pop_column] = gdf[pop_column].apply(lambda x: int(x))
+    gdf[pop_col] = gdf[pop_col].apply(lambda x: int(x))
     
     #see if population is equal
-    equality = equal_population(gdf, pop_column)
+    equality = equal_population(gdf, pop_col)
     
     d={}
 
     if equality['equal_pop'] == 'No':
         # get the maximum and minimum values of the column
-        max_value = gdf[pop_column].max()
-        min_value = gdf[pop_column].min()
+        max_value = gdf[pop_col].max()
+        min_value = gdf[pop_col].min()
 
         # calculate and return the range
         d['pop_range_value'] = max_value - min_value
 
     # if equality['equal_pop'] == 'No':
-        tot_pop = gdf[pop_column].sum()
+        tot_pop = gdf[pop_col].sum()
         # calculate ideal population
         ideal_pop = tot_pop/len(gdf)
 
@@ -90,11 +96,11 @@ def pop_difference(gdf, pop_column):
 
         for index, row in gdf.iterrows():
             # calculate absolute deviation from ideal population
-            abs_dev = row[pop_column] - ideal_pop
+            abs_dev = row[pop_col] - ideal_pop
             abs_deviation.append(abs_dev)
             
             #calculate % deviation
-            pct_dev = abs_dev/row[pop_column]
+            pct_dev = abs_dev/row[pop_col]
             pct_deviation.append(pct_dev)
         
         # calculate mean deviation
@@ -111,3 +117,13 @@ def pop_difference(gdf, pop_column):
 
 
 
+
+
+# def pop_equality(gdf):
+#     a= equal_population(gdf)
+#     b= pop_difference_congressional(gdf)
+#     c= pop_difference_legislative(gdf)
+#     return a,b,c
+    
+    
+# test = pop_equality(shp)

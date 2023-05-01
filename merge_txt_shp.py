@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 import geopandas as gpd
 import numpy as np
 from pop_equality import get_pop_col
-from get_column_info import get_dist_col, get_state_geoid, get_dist_col, get_gdf_geoid
+from get_column_info import chng_dist_col, get_state_geoid, get_gdf_geoid
 #import pygris as pg
 
 
@@ -31,7 +31,8 @@ def merge_user_inputs(user_txt, geo_gdf, user_input_demographics):
     state_id = geo_state[1]
     
     #csv district column
-    district_csv = get_dist_col(user_txt)
+    user_txt = chng_dist_col(user_txt)
+    district_csv = 'district_csv'
     
     ##find GEOID for shapefile user input
     # geoid_col_shp = geo_gdf.applymap(lambda x: len(str(x)) > 4 and str(x).startswith(str(state_id))).all()
@@ -48,11 +49,15 @@ def merge_user_inputs(user_txt, geo_gdf, user_input_demographics):
     #group data by district
     #make sure data columns are integers
     # user_input_demographics = ['tot_pop', 'hispLat_pop', 'white_pop', 'black_pop', 'asian_pop']
+    print(map_merged.columns)
+    print(user_input_demographics)
     for i in map_merged.columns:
         if i in user_input_demographics:
             map_merged[i] = map_merged[i].apply(lambda x: int(x))
     #now group
+    print(map_merged.columns)    
     grouped_data = map_merged.groupby(district_csv)[user_input_demographics].sum()
+
     
     # Group the polygons by a column with shared data
     #first remove the demographic data so it will not be duplicated after we add the aggregated data

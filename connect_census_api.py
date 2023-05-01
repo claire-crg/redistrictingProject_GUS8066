@@ -51,7 +51,7 @@ def get_geo(user_geo_type, user_txt):
             geo = pg.voting_districts(state = str(state_id), cb = True, cache = True, year = 2020)
     else:
         print("Geography not given")
-    
+    print(geo.crs)
     #get geoid from census geography
     x = [col for col in geo.columns if "GEOID" in col]
     for col in x:
@@ -139,14 +139,14 @@ def join_cen_assgn(user_txt, geo_data, user_geo_type):
 def merge_cendata_geo(data_merged, geo_data):
     
     #get shapes from census
-    geo = gpd.GeoDataFrame(geo_data[0], geometry='geometry', crs='WGS84')
-        
+    geo = gpd.GeoDataFrame(geo_data[0], geometry='geometry', crs='EPSG:4269')
+
     #geoid from user text
     geoid_user_txt = geo_data[2]
-    
+    print(geoid_user_txt)
     #geoid from cen geo
     geoid_cen = geo_data[3]
-        
+    print(geoid_cen)
     ##merge user input
     
     #check for leading 0s
@@ -159,10 +159,11 @@ def merge_cendata_geo(data_merged, geo_data):
         data_merged[geoid_user_txt] = data_merged['GEOID'].apply(lambda x: str(x).zfill(max_len_user))
         geo[geoid_cen] = geo[geoid_cen].apply(lambda x: str(x).zfill(max_len_cen))
 
+
     #merge user text input to gdf from census
-    geo_merged = geo.merge(data_merged, left_on = geoid_cen, right_on = 'GEOID')
+    geo_merged = geo.merge(data_merged, left_on = geoid_cen, right_on = geoid_user_txt)
     # geo_merged = geo.merge(data_merged, on = str(geoid_user_txt))
-    
+   
     return geo_merged
     
 
@@ -170,12 +171,18 @@ def agg_geo(data_merged, geo_data, user_txt):
     #merge census data to geography
     geo = merge_cendata_geo(data_merged, geo_data)
 
+    #keep same CRS as when downloaded from census
+    geo.to_crs('EPSG:4269')
+    
     #get the assignments column from the user txt file
     districts = get_dist_col(user_txt)
     
     ## Group the polygons by a column with shared data
-    grouped_polygons = geo.groupby(districts)['geometry'].agg(lambda x: gpd.GeoSeries(x).unary_union)
+    grouped_polygons = geo.dissolve(by=districts, as_index=False)
+    grouped_polygons = grouped_polygons[[districts, 'geometry']]
     
+    # grouped_polygons = geo.groupby(districts)['geometry'].agg(lambda x: gpd.GeoSeries(x).unary_union)
+
     #Group census data by district
     #convert columns to integers
     col_names = ["tot_pop", "hispLat_pop", "white_pop", "black_pop", "asian_pop"]
@@ -187,10 +194,11 @@ def agg_geo(data_merged, geo_data, user_txt):
     
     ##merge aggregated data to grouped polygons
     # grouped_polygons = gpd.GeoDataFrame(grouped_polygons, geometry='geometry')
-    grouped_polygons = pd.merge(grouped_polygons, grouped_data, how='inner', on=districts).reset_index()
+    grouped_polygons = grouped_polygons.merge(grouped_data, on=districts)
+    # grouped_polygons = pd.merge(grouped_polygons[[districts, 'geometry']], grouped_data, how='inner', on=districts).reset_index()
     
     # Convert the grouped polygons to a GeoDataFrame
-    aggregated_polygons = gpd.GeoDataFrame(grouped_polygons, crs=geo.crs)
+    aggregated_polygons = gpd.GeoDataFrame(grouped_polygons, crs='EPSG:4269')
     
     return aggregated_polygons 
 

@@ -26,14 +26,22 @@ def get_state_geoid(user_txt):
     
     return geoid, state_id
 
-
-
 def get_dist_col(user_txt):
     #find the column with GEOID
     district_col = user_txt.applymap(lambda x: len(str(x)) < 4).all()
     district_csv = district_col[district_col].index[0]
-    
+
     return district_csv
+
+
+def chng_dist_col(user_txt):
+    #find the column with GEOID
+    district_col = user_txt.applymap(lambda x: len(str(x)) < 4).all()
+    district_csv = district_col[district_col].index[0]
+    user_txt = user_txt.rename(columns={str(district_csv):'district_csv'})
+    
+
+    return user_txt
 
 
 def get_gdf_geoid(user_gdf, user_txt):
