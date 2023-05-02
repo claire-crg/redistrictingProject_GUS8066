@@ -6,13 +6,14 @@ Created on Fri Mar 31 12:43:11 2023
 """
 import os
 import pandas as pd
-wd = os.getcwd()
+# wd = os.getcwd()
 
-def historic_df_builder():
-    path_house_2018 = './data/elections/HOUSE_precinct_general.csv'
-    path_senate_2018 = './data/elections/SENATE_precinct_general.csv'
+def historic_df_builder(historic):
     
-    house = pd.read_csv(path_house_2018)
+    # path_house_2018 = './data/elections/HOUSE_precinct_general.csv'
+    # path_senate_2018 = './data/elections/SENATE_precinct_general.csv'
+    path = historic[0]
+    house = pd.read_csv(path)
     state = 'PENNSYLVANIA'
     
     #state_df = house.loc[(house['state'] == state)] #& (house['party_simplified'] == 'REPUBLICAN'), ['party_simplified', 'votes', 'state_fips', 'county_fips']] 

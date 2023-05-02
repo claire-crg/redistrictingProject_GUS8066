@@ -39,7 +39,7 @@ from lobby_new import check_cols_match
 # plans = glob.glob(path)
 
 
-def final_dict_builder(plans_folder, shape, user_input, user_pop, user_geo):
+def final_dict_builder(plans_folder, shape, user_input, user_pop, user_geo, historic):
     
     folder_string = plans_folder[0]
     plans= glob.glob(folder_string + '/*.csv')
@@ -84,7 +84,7 @@ def final_dict_builder(plans_folder, shape, user_input, user_pop, user_geo):
         #calculate measures
         # dict_outputs= {}
         dict_compact= compact(user_input, geo_df) #output is a dictionary for each plan
-        dict_fairness= fairness(plan) #output is a dictionary for each plan
+        dict_fairness= fairness(plan, historic) #output is a dictionary for each plan
         dict_equal_pop = pop_difference(geo_df, user_pop)
         
         

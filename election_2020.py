@@ -17,9 +17,9 @@ vote tallies for the first race as 'Dem Votes' and 'GOP Votes' and configures
 the data for partisan fairness analysis by the gerrymetrics package. 
 """
 
-def election_2020():
+def election_2020(shape):
     # wd = os.getcwd()
-    path = "./data/pa_vest_20.shp"
+    path = shape[0]
     df = gpd.read_file(path)
     df['GEOID20'] = df['STATEFP']+df['COUNTYFP'] + df['VTDST']
     df = df.rename(columns={'G20PREDBID':'dem_votes', 'G20PRERTRU':'gop_votes'})

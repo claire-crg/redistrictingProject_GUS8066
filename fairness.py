@@ -13,17 +13,17 @@ import partisan_fairness as pf
 import os
 import glob
 import warnings
-warnings.filterwarnings("ignore")
-wd = os.getcwd()
+# warnings.filterwarnings("ignore")
+# wd = os.getcwd()
 
-path = wd
-plans = glob.glob(os.path.join(path + "/data/plans/*.csv"))
-# plan = pd.read_csv("./data/pa_no_splits.csv")
+# path = wd
+# plans = glob.glob(os.path.join(path + "/data/plans/*.csv"))
+# # plan = pd.read_csv("./data/pa_no_splits.csv")
 
-def build_geoid(plan):
+def build_geoid(plan, historic):
     plan_df = pd.read_csv(plan)
     plan = plan_df.rename(columns={'id': 'GEOID20'})
-    df = historic_df_builder()
+    df = historic_df_builder(historic)
     df = df.merge(plan, on='GEOID20')
     
     return df
@@ -58,8 +58,8 @@ def calc_measures(df_calc):
     
     return d
 
-def fairness(plan):
-    a= build_geoid(plan)
+def fairness(plan, historic):
+    a= build_geoid(plan, historic)
     b= group_by_party_outcome(a)
     c= calc_measures(b)
     
