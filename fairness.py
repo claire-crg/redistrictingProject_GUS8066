@@ -61,7 +61,7 @@ Returns:
     return df_grouped
     
 def calc_measures(df_calc):
-    """
+        """
 Calculate voteshare and wasted vote measures from provided DataFrame.
 
 Parameters:
@@ -88,7 +88,7 @@ Returns:
     return d
 
 def fairness(plan, historic, st_fips):
-    """
+        """
 Main function of script. Calculates fairness measures: Efficiency Gap, Mean-Median Difference, Lopsided-Margins Test
     and returns scores for plan as dictionary. Dictionary keys: eg, mmd, lmt
     
@@ -99,6 +99,7 @@ Parameters:
 
 Returns:
     dict: Dictionary of calculated fairness measures.
+    """
 
     a= build_geoid(plan, historic, st_fips)
     b= group_by_party_outcome(a)
