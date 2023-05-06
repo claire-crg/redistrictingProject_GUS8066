@@ -11,14 +11,23 @@ import numpy as np
 
 
 
-""" The following function takes the electoral outcomes from the 2020 election 
-processed and released by the VEST team at Redistricting Data Hub in .shp
-format. The function concatenates columns to create a GEOID20. It renames the
-vote tallies for the first race as 'Dem Votes' and 'GOP Votes' and configures
+""" The following functions take the electoral outcomes processed and released
+by the VEST team at Redistricting Data Hub in .shp format. The function
+concatenates columns to create a GEOID20. It renames the vote tallies for
+the first race as 'Dem Votes' and 'GOP Votes' and configures
 the data for partisan fairness analysis by the gerrymetrics package. 
 """
 
 def eg(df):
+       """
+    Calculate the Efficiency Gap (EG) based on the provided DataFrame.
+
+    Parameters:
+        df (DataFrame): DataFrame from fairness module with 'dem_wasted', 'gop_wasted', and 'total' columns.
+
+    Returns:
+        float: Efficiency gap value.
+    """
    dem_waste_total = df['dem_wasted'].sum()
    gop_waste_total = df['gop_wasted'].sum()
    total = df['total'].sum()
@@ -27,6 +36,15 @@ def eg(df):
    return eg
 
 def mean_median(df):
+       """
+    Calculate the mean-median difference (MMD) based on the provided DataFrame.
+
+    Parameters:
+        df (DataFrame): DataFrame from fairness module containing election data with party voteshare.
+
+    Returns:
+        float: Mean-median difference value.
+    """
     dem_median = df['d_voteshare'].median()
     # gop_median = 1 - df['d_voteshare'].median
     dem_mean = df['d_voteshare'].sum()/len(df['district'])
@@ -36,6 +54,15 @@ def mean_median(df):
 
 
 def lmt(df):
+       """
+    Calculate the lopsided margin of victory (LMT) based on the provided DataFrame.
+
+    Parameters:
+        df (DataFrame): DataFrame from fairness module containing election data with party voteshare.
+
+    Returns:
+        float: Lopsided margin of victory value.
+    """
     d_voteshare = np.array(df.d_voteshare)
     d_lmt = d_voteshare[df.party == 'D'].mean()
     r_voteshare = np.array(df.r_voteshare)
