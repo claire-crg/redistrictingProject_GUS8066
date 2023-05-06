@@ -21,6 +21,17 @@ import warnings
 # # plan = pd.read_csv("./data/pa_no_splits.csv")
 
 def build_geoid(plan, historic, st_fips):
+        """
+Build a DataFrame by merging redistricting plan and historic election data on constructed geoid20 column.
+
+Parameters:
+    plan (str): string of redistricing plan passed to function.
+    historic (list): List passed from interface_handler including historic data file in csv format.
+    st_fips (str): State FIPS code.
+
+Returns:
+    DataFrame: Merged DataFrame containing plan and historic data.
+    """
     plan_df = pd.read_csv(plan)
     plan = plan_df.rename(columns={'id': 'geoid20'})
     df = historic_df_builder(plan, historic, st_fips)
@@ -29,6 +40,15 @@ def build_geoid(plan, historic, st_fips):
     return df
 
 def group_by_party_outcome(df):
+    """
+Group the DataFrame by district and calculate party outcomes.
+
+Parameters:
+    df (DataFrame): DataFrame containing election data.
+
+Returns:
+    DataFrame: Grouped DataFrame with summed dem_votes and gop_votes, and calculated d_voteshare.
+    """
     
     df_grouped = df.groupby(by='district')['dem_votes', 'gop_votes'].sum()
     df_grouped['d_voteshare'] = df_grouped['dem_votes']/(df_grouped['dem_votes'] + df_grouped['gop_votes'])
@@ -41,6 +61,15 @@ def group_by_party_outcome(df):
     return df_grouped
     
 def calc_measures(df_calc):
+    """
+Calculate voteshare and wasted vote measures from provided DataFrame.
+
+Parameters:
+    df_calc (DataFrame): DataFrame containing election data.
+
+Returns:
+    dict: Dictionary of plan scores for Efficiency Gap:'eg', Mean-Median Difference: mmd', and Lopsided Margins Test: 'lmt'.
+    """
         
     d={}       
     
@@ -59,6 +88,18 @@ def calc_measures(df_calc):
     return d
 
 def fairness(plan, historic, st_fips):
+    """
+Main function of script. Calculates fairness measures: Efficiency Gap, Mean-Median Difference, Lopsided-Margins Test
+    and returns scores for plan as dictionary. Dictionary keys: eg, mmd, lmt
+    
+Parameters:
+    plan (str): string of redistricting plan in .csv format passed to function from list data.
+    historic (list): List item of file path to historic election data.
+    st_fips (str): State FIPS code passed from geodataframe generated in merge_txt_shp.
+
+Returns:
+    dict: Dictionary of calculated fairness measures.
+
     a= build_geoid(plan, historic, st_fips)
     b= group_by_party_outcome(a)
     c= calc_measures(b)
