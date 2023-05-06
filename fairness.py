@@ -6,13 +6,9 @@ Created on Sun Mar 26 15:07:28 2023
 """
 import pandas as pd
 import numpy as np
-import geopandas as gpd
-from election_2020 import election_2020
 from historic_election_data import historic_df_builder
 import partisan_fairness as pf
-import os
-import glob
-import warnings
+
 
 def build_geoid(plan, historic, st_fips):
         """
