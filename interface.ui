@@ -40,7 +40,7 @@
     </font>
    </property>
    <property name="text">
-    <string>Lopsided-Margins</string>
+    <string>Lopsided-Margins Test</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="plan_text">
