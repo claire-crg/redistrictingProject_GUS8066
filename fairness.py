@@ -80,14 +80,17 @@ Returns:
     df_calc['dem_wasted'] = np.where(df_calc['party'] == 'R', df_calc.dem_votes, df_calc.dem_votes - (df_calc.total/2) - .5)
     df_calc['gop_wasted'] = np.where(df_calc['party'] == 'D', df_calc.gop_votes, df_calc.gop_votes - (df_calc.total/2) - .5)
     df_calc['r_voteshare'] = 1 - df_calc['d_voteshare']
-    #df = df_calc.copy()
-    d['eg'] = pf.eg(df_calc)
-    d['mmd'] = pf.mean_median(df_calc)
-    d['lmt'] = pf.lmt(df_calc)
+
+    if "Efficiency Gap" in user_input:
+        d['eg'] = pf.eg(df_calc)
+    if "Mean-Median Difference" in user_input:
+        d['mmd'] = pf.mean_median(df_calc)
+    if "Lopsided-Margins Test" in user_input:
+        d['lmt'] = pf.lmt(df_calc)
 
     return d
 
-def fairness(plan, historic, st_fips):
+def fairness(plan, historic, st_fips, user_input):
         """
 Main function of script. Calculates fairness measures: Efficiency Gap, Mean-Median Difference, Lopsided-Margins Test
     and returns scores for plan as dictionary. Dictionary keys: eg, mmd, lmt
