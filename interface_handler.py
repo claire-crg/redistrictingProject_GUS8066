@@ -76,13 +76,18 @@ class UI(QWidget):
         
     def get_pop_column(self):
         file = shape[0]
-        source = ogr.Open(file)
-        layer = source.GetLayer()
-        ldefn = layer.GetLayerDefn()
-        for n in range(ldefn.GetFieldCount()):
-            fdefn = ldefn.GetFieldDefn(n)
-            pop_column_options.append(fdefn.name)
-        self.update_pop_combo()
+        if len(file) > 0:
+            source = ogr.Open(file)
+            layer = source.GetLayer()
+            ldefn = layer.GetLayerDefn()
+            for n in range(ldefn.GetFieldCount()):
+                fdefn = ldefn.GetFieldDefn(n)
+                pop_column_options.append(fdefn.name)
+            self.update_pop_combo()
+        else:
+            cen_pop = 'population from census'
+            pop_column_options.append(cen_pop)
+            
     def update_pop_combo(self):
         self.pop_combo.addItems(pop_column_options)
     def browse_historic_box(self):
