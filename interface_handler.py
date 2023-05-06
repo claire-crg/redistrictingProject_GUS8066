@@ -85,9 +85,9 @@ class UI(QWidget):
                 pop_column_options.append(fdefn.name)
             self.update_pop_combo()
         else:
-            cen_pop = 'population from census'
+            cen_pop = 'tot_pop'
             pop_column_options.append(cen_pop)
-            
+            self.update_pop_combo()
     def update_pop_combo(self):
         self.pop_combo.addItems(pop_column_options)
     def browse_historic_box(self):
