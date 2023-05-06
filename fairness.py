@@ -106,7 +106,7 @@ Returns:
 
     a= build_geoid(plan, historic, st_fips)
     b= group_by_party_outcome(a)
-    c= calc_measures(b)
+    c= calc_measures(b, user_input)
     
     return c
 
