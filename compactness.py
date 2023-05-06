@@ -51,7 +51,7 @@ def compact(measures, geo_df):
 #pass in a list of measures
     d = {}
     
-    if "Polsby Popper" in measures:
+    if "Polsby-Popper" in measures:
         pp = cm.polsby_popper(geo_df)
         d["min_pp"] = [min(pp)]
         d["mean_pp"] = [s.mean(pp)]
