@@ -26,7 +26,7 @@ def historic_df_builder(plan, historic, st_fips):
     else:
         print('No state code found')
 
-    house = pd.read_csv(historic[0])
+    house = pd.read_csv(historic[0], engine ='python')
     house.columns = [x.lower().strip() for x in house.columns]  
     house['plan_fips'] = state_fips
     house = house.astype({'plan_fips': 'Int64'})
