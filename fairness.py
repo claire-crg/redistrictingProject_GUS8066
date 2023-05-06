@@ -40,7 +40,7 @@ Returns:
     return df
 
 def group_by_party_outcome(df):
-    """
+        """
 Group the DataFrame by district and calculate party outcomes.
 
 Parameters:
