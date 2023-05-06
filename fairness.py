@@ -13,12 +13,6 @@ import partisan_fairness as pf
 import os
 import glob
 import warnings
-# warnings.filterwarnings("ignore")
-# wd = os.getcwd()
-
-# path = wd
-# plans = glob.glob(os.path.join(path + "/data/plans/*.csv"))
-# # plan = pd.read_csv("./data/pa_no_splits.csv")
 
 def build_geoid(plan, historic, st_fips):
         """
