@@ -7,7 +7,7 @@ Created on Fri Mar 31 12:43:11 2023
 import os
 import pandas as pd
 from get_column_info import split_string, get_state_geoid
-# wd = os.getcwd()
+
 
 def historic_df_builder(plan, historic, st_fips):
         """
@@ -30,12 +30,12 @@ Returns:
     if 'state_fips' in plan.columns:
         plan['state_fips'] = plan['state_fips'].apply(lambda x: '{0:0>2}'.format(x))
         state_fips =  plan['state_fips'][1]
-        print(f"state_fips = {state_fips}")
+        print(f"state_fips = {state_fips}")# grabs state fips code if in plan.
     elif "geoid20" in plan.columns:
         state_fips = plan['geoid20'][1][:2]
-        print(f"geoid = {state_fips}")
+        print(f"geoid = {state_fips}")# uses geoid to generate state fips code if in plan.
     elif st_fips is not None:
-        state_fips = st_fips
+        state_fips = st_fips # uses state fips code from geodataframe if other options not available.
     else:
         print('No state code found')
 
@@ -44,9 +44,6 @@ Returns:
     house['plan_fips'] = state_fips
     house = house.astype({'plan_fips': 'Int64'})
 
-
-    
-    #state_df = house.loc[(house['state'] == state)] #& (house['party_simplified'] == 'REPUBLICAN'), ['party_simplified', 'votes', 'state_fips', 'county_fips']] 
  
     state_df = house.loc[house['state_fips'] == house['plan_fips']]
     
