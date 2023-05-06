@@ -10,6 +10,19 @@ from get_column_info import split_string, get_state_geoid
 # wd = os.getcwd()
 
 def historic_df_builder(plan, historic, st_fips):
+        """
+Build a historic election DataFrame to calculate voteshare based on a plan DataFrame and a historic DataFrame.
+
+Parameters:
+    plan (DataFrame): DataFrame containing plan information.
+    historic (list): List of file paths to historic data files. Ideally from Harvard Dataverse:
+        MIT Election Data and Science Lab, 2022, "U.S. House of Representatives Precinct-Level Returns 2018",
+        https://doi.org/10.7910/DVN/IVIXLK, Harvard Dataverse, V1, UNF:6:LuDzTUr155JEhY8ckZ+HHg== [fileUNF]
+    st_fips (str or None): State FIPS code. If provided, overrides state FIPS code found in the plan DataFrame.
+    
+Returns:
+    DataFrame: Historic election DataFrame with aggregated data.
+    """
 
 
     plan.columns = [x.lower().strip() for x in plan.columns]
