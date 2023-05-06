@@ -94,7 +94,7 @@ class UI(QWidget):
     def launch_tests(self):             
         self.on_state_changed()   
         window.close()
-        final = final_dict_builder(plans_folder, shape, user_input, user_pop, user_geo)
+        final = final_dict_builder(plans_folder, shape, user_input, user_pop, user_geo, historic)
         final_dictionary.update(final)
         print(final)
         

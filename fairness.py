@@ -20,23 +20,23 @@ import warnings
 # plans = glob.glob(os.path.join(path + "/data/plans/*.csv"))
 # # plan = pd.read_csv("./data/pa_no_splits.csv")
 
-def build_geoid(plan, historic):
+def build_geoid(plan, historic, st_fips):
     plan_df = pd.read_csv(plan)
-    plan = plan_df.rename(columns={'id': 'GEOID20'})
-    df = historic_df_builder(historic)
-    df = df.merge(plan, on='GEOID20')
+    plan = plan_df.rename(columns={'id': 'geoid20'})
+    df = historic_df_builder(plan, historic, st_fips)
+    df = df.merge(plan, on='geoid20')
     
     return df
 
 def group_by_party_outcome(df):
     
-    df_grouped = df.groupby(by='District')['dem_votes', 'gop_votes'].sum()
+    df_grouped = df.groupby(by='district')['dem_votes', 'gop_votes'].sum()
     df_grouped['d_voteshare'] = df_grouped['dem_votes']/(df_grouped['dem_votes'] + df_grouped['gop_votes'])
-    df_grouped.insert(1, 'State', 'PA')
+    df_grouped.insert(1, 'state', 'PA')
     # df_grouped.insert(1, 'Year', '2018')
     # df_grouped.insert(1, 'Incumbent', 'R')
     # df_grouped.insert(1, 'Party', 'R')
-    df_grouped = df_grouped.reset_index().rename(columns = {'index':'District'})
+    df_grouped = df_grouped.reset_index().rename(columns = {'index':'district'})
     
     return df_grouped
     
@@ -46,20 +46,20 @@ def calc_measures(df_calc):
     
     #df_calc = df_grouped[['State', 'District' , 'dem_votes', 'gop_votes', 'd_voteshare']]
     # df_calc = df_calc.rename(columns={'dem_votes': 'Dem Votes', 'gop_votes': 'GOP Votes', 'd_voteshare' : 'D Voteshare'})
-    df_calc['Party'] = np.where(df_calc['dem_votes'] > df_calc['gop_votes'], 'D', 'R')
+    df_calc['party'] = np.where(df_calc['dem_votes'] > df_calc['gop_votes'], 'D', 'R')
     df_calc['total'] = df_calc.dem_votes + df_calc.gop_votes
-    df_calc['dem_wasted'] = np.where(df_calc['Party'] == 'R', df_calc.dem_votes, df_calc.dem_votes - (df_calc.total/2) - .5)
-    df_calc['gop_wasted'] = np.where(df_calc['Party'] == 'D', df_calc.gop_votes, df_calc.gop_votes - (df_calc.total/2) - .5)
+    df_calc['dem_wasted'] = np.where(df_calc['party'] == 'R', df_calc.dem_votes, df_calc.dem_votes - (df_calc.total/2) - .5)
+    df_calc['gop_wasted'] = np.where(df_calc['party'] == 'D', df_calc.gop_votes, df_calc.gop_votes - (df_calc.total/2) - .5)
     df_calc['r_voteshare'] = 1 - df_calc['d_voteshare']
     #df = df_calc.copy()
     d['eg'] = pf.eg(df_calc)
     d['mmd'] = pf.mean_median(df_calc)
     d['lmt'] = pf.lmt(df_calc)
-    
+
     return d
 
-def fairness(plan, historic):
-    a= build_geoid(plan, historic)
+def fairness(plan, historic, st_fips):
+    a= build_geoid(plan, historic, st_fips)
     b= group_by_party_outcome(a)
     c= calc_measures(b)
     

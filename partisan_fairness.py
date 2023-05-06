@@ -29,16 +29,17 @@ def eg(df):
 def mean_median(df):
     dem_median = df['d_voteshare'].median()
     # gop_median = 1 - df['d_voteshare'].median
-    dem_mean = df['d_voteshare'].sum()/len(df['District'])
-    # mean_median = abs(dem_median-dem_mean)
+    dem_mean = df['d_voteshare'].sum()/len(df['district'])
+    mean_median = abs(dem_median-dem_mean)
     #print(dem_median)
-    return dem_median
+    return mean_median
+
 
 def lmt(df):
     d_voteshare = np.array(df.d_voteshare)
-    d_lmt = d_voteshare[df.Party == 'D'].mean()
+    d_lmt = d_voteshare[df.party == 'D'].mean()
     r_voteshare = np.array(df.r_voteshare)
-    r_lmt = r_voteshare[df.Party == 'R'].mean()
+    r_lmt = r_voteshare[df.party == 'R'].mean()
     # print(d_lmt)
     # print (r_lmt)
     # print(d_voteshare)
