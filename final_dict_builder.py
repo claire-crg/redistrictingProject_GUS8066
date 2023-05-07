@@ -23,31 +23,76 @@ from lobby_new import check_cols_match
 # warnings.filterwarnings("ignore")
 
 
-# # gdf = 'C:/Users/tup48123/Documents/ApplicationDevelopment/Project/data/vtd_gdf.gpkg'
-# user_input = ["Polsby Popper","Schwartzberg", "Convex Hull Ratio", "Reock"]
-# # plan=[]
-# shape=[]
-# # historic =[]
-# # geo_list =['County', 'County Subdivision', 'Place', 'Tract', 'Voting District']
-# user_geo = ['Voting District']
-# user_pop = ['tot_pop']
-# # pop_column_options = []
-
-# wd = os.getcwd()
-# wd_path = r'C:/Users/tup48123/Documents/ApplicationDevelopment/redistrictingProject_GUS8066-main'
-# path = os.path.join(wd_path + "/data/*.csv")
-# plans = glob.glob(path)
-
-compactness_tests = ['Polsby-Popper', 'Schwartzberg', 'Convex Hull Ratio', 'Reock']
-fairness_tests = ['Efficiency Gap', 'Mean-Median Difference', 'Lopsided-Margins Test']
-population_tests = ['Equal Population']
-
 def final_dict_builder(plans_folder, shape, user_input, user_pop, user_geo, historic):
+    """ Runs redistricting measures based on user inputs for each plan
+        and creates a dictionary of dictionary holding the results for each plan.
     
+    Parameters
+    --------------------------
+    
+    plans_folder : List
+        A list with the path (string) to the folder containing all proposed
+        redistricting plans.
+    shape: List
+        A list with the path (string) for the geography file.
+    user_input: List
+        A list with the names of measures chosen by the user in the GUI interface.
+    user_geo: List
+        A list with the name of the geography level they are working with.
+    historic: List
+        A list containing the path (string) for the historic election data file.
+    
+    Returns
+    --------------------------
+    Dictionary of dictionaries
+        Each sub-dictionary corresponds to a single plan from the folder of plans
+        and contains the results of the user's chosen measures.
+        
+    Notes
+    -----------------------------
+    Redistricting measures:
+        1. Compactness: how close to a circle is the shape of the proposed district?
+        2. Fairness: does a political party have an unfair advantage in a district?
+        3. Population: is the equal population requirement met?
+    
+    Examples
+    ------------------------------
+    
+    >>> final_dict_builder(plans_folder, shape, user_input, user_pop, user_geo, historic)
+    
+    {
+     plan1:{
+         "eg": 0.07,
+         "lmt": 0.08,
+         "mean_pp": 0.2,
+         "min_pp": 0.01,
+         "pop_range_value" : 4048,
+         "pop_mean_deviation" : 4.1,
+         "pop_range_deviation" : 0.005
+         },
+     plan2:{
+         "eg": 0.07,
+         "lmt": 0.09,
+         "mean_pp": 0.5,
+         "min_pp": 0.2,
+         "pop_range_value" : 7671,
+         "pop_mean_deviation" : 4.79e-11,
+         "pop_range_deviation" : 0.01
+         }  
+     }
+    
+    """
+    
+    compactness_tests = ['Polsby-Popper', 'Schwartzberg', 'Convex Hull Ratio', 'Reock']
+    fairness_tests = ['Efficiency Gap', 'Mean-Median Difference', 'Lopsided-Margins Test']
+    population_tests = ['Equal Population']
+    
+    #open folder with plans
     folder_string = plans_folder[0]
     plans= glob.glob(folder_string + '/*.csv')
     print(folder_string)
-    ######main function calling all functions
+    
+    #create empty dictionary
     dict_of_dicts = {}
     
     #check if list of plans is correct
@@ -101,11 +146,6 @@ def final_dict_builder(plans_folder, shape, user_input, user_pop, user_geo, hist
             dict_equal_pop = pop_difference(geo_df, user_pop)
             dict_outputs.update(dict_equal_pop)
         
-        
-        
-        # dict_compact.update(dict_fairness)
-        # dict_compact.update(dict_equal_pop)
-        
         #create inner dictionary to join to dict of dicts
         inner_dict = {}
         
@@ -121,25 +161,3 @@ def final_dict_builder(plans_folder, shape, user_input, user_pop, user_geo, hist
             
     return dict_of_dicts
 
-
-
-# test = final_dict_builder(plans, shape, user_input, user_pop, user_geo)
-
- ####main function for 1 measure to create a dict of dicts
-#this one works       
-# for plan in plans:  
-
-#     key= os.path.basename(plan)
-     
-#     inner_dict = {}
-    
-#     test=fairness(plan)
-        
-#     values_test = list(test.values())
-#     keys_test = list(test.keys())
-    
-#     for plan_index in range(len(values_test)):
-
-#         inner_dict[keys_test[plan_index]] = values_test[plan_index]
-        
-#         dict_of_dicts[f'{key}']= inner_dict
