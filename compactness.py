@@ -2,11 +2,6 @@
 """
 Created on Tue Apr  4 20:03:52 2023
 
-@author: tuq05079
-"""
-
-# -*- coding: utf-8 -*-
-"""
 @author: claire
 """
 
@@ -15,43 +10,53 @@ import sys
 import geopandas as gpd
 import pandas as pd
 import statistics as s
-
-#set virtual directory
-# os.chdir("C:/Users/tup48123/Documents/ApplicationDevelopment/Project")
-
-# Importing module from github
-# sys.path.insert(1, "C:/Users/tup48123/Documents/ApplicationDevelopment/Project")
 import compactness_measures as cm #only use base name of file
-
-##
-
-#pull user input from virtual directory
-#write files to a temp folder?
-
-#read in user inputted file
-# shp = gpd.read_file("data/SHP/pa_vtd_2020_bound.shp", crs="4269")
-
-# user_input = ["Polsby Popper","Schwartzberg", "Convex Hull Ratio"]
-
-# user_input = ["Polsby Popper","Schwartzberg", "Convex Hull Ratio", "Reock"]
-
 
 #########OUTPUT
 ## minimum or average or both compactness scores
 ## minimum because targetting in specific districts
-
-##make function able to accept a list of files
 
 #ask user to specify as parameter which measure they want
 
 #%%
 def compact(measures, geo_df):
     
-#user can pass multiple measures so more than 1 can be calculated
-#pass in a list of measures
+    """Calculates compactness measures based on which measures the user chooses.
+
+    Minimum and mean values are returned for each chosen measure. This gives a
+    user an idea of how well a model performs without providing a score for
+    each polygon. Some users might pass a thousand plans.
+
+    Parameters
+    --------------------------
+
+    measures : list
+        Compactness measures chosen by user in the GUI interface.
+    geo_df : GeoDataFrame
+        Either the geometry file provided by user or the one pulled from the Census API.
+        gdf gets passed after polygons have been aggregated by district assignment.
+
+    Returns
+    --------------------------
+    dictionary
+        Dictionary containing names and values of calculated compactness measures.
+
+    Examples
+    ------------------------------
+   
+    >>> compact(['Polsby Popper', 'Convex Hull Ratio'], gdf_vtds)
+    {
+     "min_pp": 0.03,
+     "mean_pp": 0.3,
+     "min_hull": 0.2,
+     "mean_hull": 0.4
+     }
+
+    Example of dictionary returned for one plan passed through compactness()""" 
+    
     d = {}
     
-    if "Polsby-Popper" in measures:
+    if "Polsby Popper" in measures:
         pp = cm.polsby_popper(geo_df)
         d["min_pp"] = [min(pp)]
         d["mean_pp"] = [s.mean(pp)]
@@ -89,15 +94,3 @@ def compact(measures, geo_df):
     
     return d
 
-#%%
-    
-    
-# c = compact(user_input, shp)
-#def main():
-    # Typical uses for main are to run or call a test or to run a 
-    # significant or commonly used function from the command line
-
- #   if __name__ == "__main__":
-  #      main()
-   # else:
-    #    pass
