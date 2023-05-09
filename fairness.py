@@ -40,7 +40,7 @@ Returns:
     DataFrame: Grouped DataFrame with summed dem_votes and gop_votes, and calculated d_voteshare.
     """
     
-    df_grouped = df.groupby(by='district')['dem_votes', 'gop_votes'].sum()
+    df_grouped = df.groupby(by='district')[['dem_votes', 'gop_votes']].sum()
     df_grouped['d_voteshare'] = df_grouped['dem_votes']/(df_grouped['dem_votes'] + df_grouped['gop_votes'])
     df_grouped.insert(1, 'state', 'PA')
     # df_grouped.insert(1, 'Year', '2018')
