@@ -45,7 +45,7 @@ def group_by_party_outcome(df):
     """
     
     
-    df_grouped = df.groupby(by='district')['dem_votes', 'gop_votes'].sum()
+    df_grouped = df.groupby(by='district')[['dem_votes', 'gop_votes']].sum()
     df_grouped['d_voteshare'] = df_grouped['dem_votes']/(df_grouped['dem_votes'] + df_grouped['gop_votes'])
     df_grouped = df_grouped.reset_index().rename(columns = {'index':'district'})
     
