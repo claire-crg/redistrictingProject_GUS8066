@@ -1,0 +1,208 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>pop_equality module &#8212; Redistricting Plan Scorer 0.0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/nature.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Redistricting Plan Scorer 0.0.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pop_equality module</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-pop_equality">
+<span id="pop-equality-module"></span><h1>pop_equality module<a class="headerlink" href="#module-pop_equality" title="Permalink to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="pop_equality.pop_equality">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pop_equality.</span></span><span class="sig-name descname"><span class="pre">pop_equality</span></span><a class="headerlink" href="#pop_equality.pop_equality" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pop_equality.pop_equality.equal_population">
+<span class="sig-name descname"><span class="pre">equal_population</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pop_column</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pop_equality.pop_equality.equal_population" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates if there is equal number of population in each polygon.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gdf</strong> (<em>GeoDataFrame</em>) – Geography file after polygons are aggregated.
+Either provided by user or pulled from Census API.</p></li>
+<li><p><strong>pop_column</strong> (<em>String</em>) – Column name of population column in GeoDataFrame</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Says whether there is equal population or not.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dictionary</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Using GDF provided by user and user specified column in GUI interface:
+&gt;&gt;&gt; equal_population(gdf_aggregated, [“pop_column”])</p>
+<dl class="simple">
+<dt>{</dt><dd><p>“equal_pop” : ‘No’
+}</p>
+</dd>
+</dl>
+<p>Using GDF from Census API. No column name provided by user in GUI interface:
+&gt;&gt;&gt; equal_population(gdf_aggregated, [])</p>
+<dl class="simple">
+<dt>{</dt><dd><p>“equal_pop” : ‘No’
+}</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pop_equality.pop_equality.get_pop_col">
+<span class="sig-name descname"><span class="pre">get_pop_col</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gdf</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pop_equality.pop_equality.get_pop_col" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets column name for population data from GeoDataFrame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user_input_pop_col</strong> (<em>list</em>) – Column names of population data inputted by user in GUI interface.</p></li>
+<li><p><strong>gdf</strong> (<em>GeoDataFrame</em>) – Geography file after polygons are aggregated.
+Either provided by user or pulled from Census API.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>String of population column name.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>String</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Using GDF provided by user and user specified column in GUI interface:
+&gt;&gt;&gt; get_pop_col([“population”], gdf_aggregated)</p>
+<p>“population”</p>
+<p>Using GDF from Census API. No column name provided by user in GUI interface:
+&gt;&gt;&gt; get_pop_col([], gdf_aggregated)</p>
+<p>“tot_pop”</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pop_equality.pop_equality.pop_difference">
+<span class="sig-name descname"><span class="pre">pop_difference</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pop_column</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pop_equality.pop_equality.pop_difference" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates by how much population quantity varies between polygons.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gdf</strong> (<em>GeoDataFrame</em>) – Geography file after polygons are aggregated.
+Either provided by user or pulled from Census API.</p></li>
+<li><p><strong>pop_column</strong> (<em>String</em>) – Column name of population column in GeoDataFrame</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Measures indicating how much population count differs.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dictionary</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<dl class="simple">
+<dt>Measures of population equality:</dt><dd><ol class="arabic simple">
+<li><p>Range = highest population count - lowest population count</p></li>
+<li><p>mean_deviation = sum(actual - ideal)/number of polygons</p></li>
+<li><p>range_deviation = abs(max((actual - ideal)/actual))+abs(min(actual - ideal)/actual))</p></li>
+</ol>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Using GDF provided by user and user specified column in GUI interface:
+&gt;&gt;&gt; pop_difference(gdf_aggregated, [“pop_column”])</p>
+<dl>
+<dt>{</dt><dd><p>“pop_range_value” : 4048,
+“pop_mean_deviation” : 4.1,
+“pop_range_deviation” : 0.005</p>
+<p>}</p>
+</dd>
+</dl>
+<p>Using GDF from Census API. No column name provided by user in GUI interface:
+&gt;&gt;&gt; pop_difference(gdf_aggregated, [])</p>
+<dl class="simple">
+<dt>{</dt><dd><p>“pop_range_value” : 4048,
+“pop_mean_deviation” : 4.1,
+“pop_range_deviation” : 0.005
+}</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/pop_equality.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Redistricting Plan Scorer 0.0.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pop_equality module</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2023, Claire Craig and Joshua Murbarger.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.0.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,130 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>compactness module &#8212; Redistricting Plan Scorer 0.0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/nature.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Redistricting Plan Scorer 0.0.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">compactness module</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-compactness">
+<span id="compactness-module"></span><h1>compactness module<a class="headerlink" href="#module-compactness" title="Permalink to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="compactness.compactness">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">compactness.</span></span><span class="sig-name descname"><span class="pre">compactness</span></span><a class="headerlink" href="#compactness.compactness" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="compactness.compactness.compact">
+<span class="sig-name descname"><span class="pre">compact</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">geo_df</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#compactness.compactness.compact" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates compactness measures based on which measures the user chooses.</p>
+<p>Minimum and mean values are returned for each chosen measure. This gives a
+user an idea of how well a model performs without providing a score for
+each polygon. Some users might pass a thousand plans.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>measures</strong> (<em>list</em>) – Compactness measures chosen by user in the GUI interface.</p></li>
+<li><p><strong>geo_df</strong> (<em>GeoDataFrame</em>) – Either the geometry file provided by user or the one pulled from the Census API.
+gdf gets passed after polygons have been aggregated by district assignment.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary containing names and values of calculated compactness measures.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dictionary</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">compact</span><span class="p">([</span><span class="s1">&#39;Polsby Popper&#39;</span><span class="p">,</span> <span class="s1">&#39;Convex Hull Ratio&#39;</span><span class="p">],</span> <span class="n">gdf_vtds</span><span class="p">)</span>
+<span class="go">{</span>
+<span class="go"> &quot;min_pp&quot;: 0.03,</span>
+<span class="go"> &quot;mean_pp&quot;: 0.3,</span>
+<span class="go"> &quot;min_hull&quot;: 0.2,</span>
+<span class="go"> &quot;mean_hull&quot;: 0.4</span>
+<span class="go"> }</span>
+</pre></div>
+</div>
+<p>Example of dictionary returned for one plan passed through compactness()</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/compactness.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Redistricting Plan Scorer 0.0.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">compactness module</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2023, Claire Craig and Joshua Murbarger.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.0.2.
+    </div>
+  </body>
+</html>
