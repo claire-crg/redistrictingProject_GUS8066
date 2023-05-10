@@ -150,8 +150,7 @@ class UI(QWidget):
         final = final_dict_builder(plans_folder, shape, user_input, user_pop, user_geo, historic)
         final_dictionary.update(final)
         output = pd.DataFrame(final_dictionary)
-        here = Path.cwd()
-        pwp = here.parents[2]
+
         if Path('output').exists == True:
             output.to_csv("output/score.csv")
         else: 
