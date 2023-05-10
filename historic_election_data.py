@@ -11,7 +11,7 @@ from get_column_info import split_string, get_state_geoid
 
 def historic_df_builder(plan, historic, st_fips):
         """
-Build a historic election DataFrame to calculate voteshare based on a plan DataFrame and a historic DataFrame.
+*Build a historic election DataFrame to calculate voteshare based on a plan DataFrame and a historic DataFrame.
 
 Parameters:
     plan (DataFrame): DataFrame containing plan information.
