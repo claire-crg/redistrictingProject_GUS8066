@@ -2,6 +2,13 @@
 
 ## This application conducts common redistricting tests on redistricting plans in .csv format. 
 
+### Quickstart
+Clone the repository. You only need the files in the top level of the repository's directory, as well as the data folder. (The docs folder contains files to create documentation).
+
+Make sure you downloaded the file, 'requirements.txt'. In your console, run the following code ''pip install -r requirements.txt''. This will create the necessary virtual environment to run the GUI.
+
+### Using the GUI
+
 Step 1. Run the executable or gui.py from the top level of the repository.
 
 Step 2. Select the path to the folder containing the plans. Two plans have been provide for testing. They are located in /data.
