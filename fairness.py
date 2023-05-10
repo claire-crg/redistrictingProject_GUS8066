@@ -12,7 +12,7 @@ import partisan_fairness as pf
 
 def build_geoid(plan, historic, st_fips):
         """
-Build a DataFrame by merging redistricting plan and historic election data on constructed geoid20 column.
+*Build a DataFrame by merging redistricting plan and historic election data on constructed geoid20 column.
 
 Parameters:
     plan (str): string of redistricing plan passed to function.
@@ -31,7 +31,7 @@ Returns:
 
 def group_by_party_outcome(df):
         """
-Group the DataFrame by district and calculate party outcomes.
+*Group the DataFrame by district and calculate party outcomes.
 
 Parameters:
     df (DataFrame): DataFrame containing election data.
@@ -52,7 +52,7 @@ Returns:
     
 def calc_measures(df_calc):
         """
-Calculate voteshare and wasted vote measures from provided DataFrame.
+*Calculate voteshare and wasted vote measures from provided DataFrame.
 
 Parameters:
     df_calc (DataFrame): DataFrame containing election data.
@@ -82,7 +82,7 @@ Returns:
 
 def fairness(plan, historic, st_fips, user_input):
         """
-Main function of script. Calculates fairness measures: Efficiency Gap, Mean-Median Difference, Lopsided-Margins Test
+*Main function of script. Calculates fairness measures: Efficiency Gap, Mean-Median Difference, Lopsided-Margins Test
     and returns scores for plan as dictionary. Dictionary keys: eg, mmd, lmt
     
 Parameters:
