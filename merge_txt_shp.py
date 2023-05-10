@@ -20,6 +20,38 @@ from get_column_info import chng_dist_col, get_state_geoid, get_gdf_geoid
 
 
 def merge_user_inputs(user_txt, geo_gdf, user_input_demographics):
+    """ Merges district assignment and geography files provided by user,
+        and aggregates polygons by district assignment.
+    
+    Parameters
+    --------------------------
+    
+    user_txt : DataFrame
+        District Assignment file provided by user.
+        Contains two columns: geography level, district assignment.
+        Geography level in user_txt must match user_geo_type.    
+    geo_gdf : GeoDataFrame
+        Geography file provided by user, opened outside this function as GDF.
+    user_input_demographics: list
+        Column names of demographic columns in user inputted GeoDataFrame.
+        Names provided by user in GUI interface.
+
+    
+    Returns
+    --------------------------
+    GeoDataFrame
+        GeoDataFrame with aggregated polygons and demographic data
+        by district assignment. Represents proposed redistricting plan.
+        
+    
+    Examples
+    ------------------------------
+      
+    >>> merge_user_inputs(plan2, PA_places, ["tot_pop", "hispLat_pop", "white_pop", "black_pop", "asian_pop"]).columns
+    
+    "GEOID", "tot_pop", "hispLat_pop", "white_pop", "black_pop", "asian_pop", "district", "geometry"
+    
+    """
     
     #user inputted text geoid and state id
     geo_state = get_state_geoid(user_txt)
@@ -43,19 +75,14 @@ def merge_user_inputs(user_txt, geo_gdf, user_input_demographics):
     map_merged = geo_gdf.merge(user_txt, left_on = geoid_shp, right_on=geoid_csv)
 
     ##aggregate
-    #get pop column
-    # pop_col = get_pop_col(user_input_pop_col[0], geo_gdf)
-    
+   
     #group data by district
     #make sure data columns are integers
-    # user_input_demographics = ['tot_pop', 'hispLat_pop', 'white_pop', 'black_pop', 'asian_pop']
-    print(map_merged.columns)
-    print(user_input_demographics)
     for i in map_merged.columns:
         if i in user_input_demographics:
             map_merged[i] = map_merged[i].apply(lambda x: int(x))
     #now group
-    print(map_merged.columns)    
+    # print(map_merged.columns)    
     grouped_data = map_merged.groupby(district_csv)[user_input_demographics].sum()
 
     

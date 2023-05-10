@@ -22,45 +22,41 @@ from get_column_info import get_state_geoid
     # return 'There is no file' if len(set(geo_list)) > 1
 
 def csv_check(plans):
-        """
-    Check if there are any files in the given folder.
-
-    Parameters:
-        plans (list): List of file paths.
-
-    Returns:
-        None
+    """ Check that district assignment files were provided.
+    
+    Parameters
+    --------------------------
+    plans: List
+        List with the path strings for the plans.
+    
+    Returns
+    --------------------------
+    String
+        Error message
+    
     """
+    
     if len(plans) < 1:
         print('There are no files in this folder')
     
 
-def shp_gdf_builder(user_gdf):
-        """
-    Build a GeoDataFrame from a shapefile.
-
-    Parameters:
-        user_gdf (str): File path to the shapefile.
-
-    Returns:
-        GeoDataFrame: The built GeoDataFrame.
-    """
-    name = os.path.splitext(os.path.basename(user_gdf))[0]
-    geo_gdf = gpd.read_file(user_gdf) 
-    # gpd.GeoDataFrame.to_file(shp_df, filename= "./data/" + name + "_gdf.shp")
-    return geo_gdf
-
-
 def check_cols_match(user_gdf, user_txt):
-        """
-    Check if the GEOID columns in the text and geography files match.
-
-    Parameters:
-        user_gdf (GeoDataFrame): GeoDataFrame containing geography data.
-        user_txt (DataFrame): DataFrame containing text data.
-
-    Returns:
-        None
+    """ Check if GEOID columns match.
+    
+    Parameters
+    --------------------------
+    user_gdf: GeoDataFrame
+        Geography file provided by user, opened outside this function as GDF.
+    user_txt: DataFrame
+        User inputted district assignment file.
+        Contains two columns: geography level, district assignment.
+        Geography level in user_txt must match user_geo_type.  
+    
+    Returns
+    --------------------------
+    String
+        Either update or error message.
+    
     """
     txt_geoid = get_state_geoid(user_txt)[0]
     gdf_geoid = get_gdf_geoid(user_gdf, user_txt)

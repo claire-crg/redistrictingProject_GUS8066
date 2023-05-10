@@ -8,19 +8,15 @@ Created on Tue Apr 18 19:58:05 2023
 from merge_txt_shp import merge_user_inputs
 from compactness import compact 
 import pandas as pd
-# import numpy as np
 import geopandas as gpd
-# from election_2020 import election_2020
-# from historic_election_data import historic_df_builder
 from fairness import fairness
 import os
 import glob
-# import warnings
 from pop_equality import pop_difference
 from connect_census_api import census_gdf_data
 from lobby_new import csv_check
 from lobby_new import check_cols_match
-# warnings.filterwarnings("ignore")
+
 
 
 def final_dict_builder(plans_folder, shape, user_input, user_pop, user_geo, historic):
@@ -87,12 +83,10 @@ def final_dict_builder(plans_folder, shape, user_input, user_pop, user_geo, hist
     fairness_tests = ['Efficiency Gap', 'Mean-Median Difference', 'Lopsided-Margins Test']
     population_tests = ['Equal Population']
     
-    #open folder with plans
     folder_string = plans_folder[0]
     plans= glob.glob(folder_string + '/*.csv')
     print(folder_string)
-    
-    #create empty dictionary
+    ######main function calling all functions
     dict_of_dicts = {}
     
     #check if list of plans is correct
@@ -110,7 +104,6 @@ def final_dict_builder(plans_folder, shape, user_input, user_pop, user_geo, hist
         print(plan)
         #read path and convert to dataframe
         opened_csv = pd.read_csv(plan)
-        print(opened_csv.head(5))
         
         #get plan names for index
         dict_of_dicts_key= os.path.basename(plan)
@@ -135,16 +128,18 @@ def final_dict_builder(plans_folder, shape, user_input, user_pop, user_geo, hist
         if not set(user_input).isdisjoint(set(compactness_tests)) == True:
             dict_compact= compact(user_input, geo_df) #output is a dictionary for each plan
             dict_outputs.update(dict_compact)
-        # st_fips = geo_df['STATEFP20'][1]
-        # print(f"st_fips = {st_fips}") 
-        st_fips = 42
         if not set(user_input).isdisjoint(set(fairness_tests)) == True:
-            dict_fairness= fairness(plan, historic, st_fips, user_input)
+            dict_fairness= fairness(plan, historic, user_input)
             dict_outputs.update(dict_fairness)
          #output is a dictionary for each plan
         if not set(user_input).isdisjoint(set(population_tests)) == True:
             dict_equal_pop = pop_difference(geo_df, user_pop)
             dict_outputs.update(dict_equal_pop)
+        
+        
+        
+        # dict_compact.update(dict_fairness)
+        # dict_compact.update(dict_equal_pop)
         
         #create inner dictionary to join to dict of dicts
         inner_dict = {}
@@ -160,4 +155,6 @@ def final_dict_builder(plans_folder, shape, user_input, user_pop, user_geo, hist
             dict_of_dicts[f'{dict_of_dicts_key}'] = inner_dict
             
     return dict_of_dicts
+
+
 

@@ -2,6 +2,11 @@
 """
 Created on Tue Apr  4 20:03:52 2023
 
+@author: tuq05079
+"""
+
+# -*- coding: utf-8 -*-
+"""
 @author: claire
 """
 
@@ -56,7 +61,7 @@ def compact(measures, geo_df):
     
     d = {}
     
-    if "Polsby Popper" in measures:
+    if "Polsby-Popper" in measures:
         pp = cm.polsby_popper(geo_df)
         d["min_pp"] = [min(pp)]
         d["mean_pp"] = [s.mean(pp)]
