@@ -1,0 +1,212 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>get_column_info module &#8212; Redistricting Plan Scorer 0.0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/nature.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Redistricting Plan Scorer 0.0.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">get_column_info module</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-get_column_info">
+<span id="get-column-info-module"></span><h1>get_column_info module<a class="headerlink" href="#module-get_column_info" title="Permalink to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="get_column_info.get_column_info">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">get_column_info.</span></span><span class="sig-name descname"><span class="pre">get_column_info</span></span><a class="headerlink" href="#get_column_info.get_column_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="get_column_info.get_column_info.chng_dist_col">
+<span class="sig-name descname"><span class="pre">chng_dist_col</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#get_column_info.get_column_info.chng_dist_col" title="Permalink to this definition">¶</a></dt>
+<dd><p>Change district column name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>user_txt</strong> (<em>DataFrame</em>) – User inputted district assignment file.
+Contains two columns: geography level, district assignment.
+Geography level in user_txt must match user_geo_type.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Updated DataFrame of user_txt</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="get_column_info.get_column_info.get_dist_col">
+<span class="sig-name descname"><span class="pre">get_dist_col</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#get_column_info.get_column_info.get_dist_col" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the district column name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>user_txt</strong> (<em>DataFrame</em>) – User inputted district assignment file.
+Contains two columns: geography level, district assignment.
+Geography level in user_txt must match user_geo_type.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>District column name</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>String</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">get_dist_col</span><span class="p">(</span><span class="n">plan10</span><span class="p">)</span>
+<span class="go">&#39;dist&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="get_column_info.get_column_info.get_gdf_geoid">
+<span class="sig-name descname"><span class="pre">get_gdf_geoid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_txt</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#get_column_info.get_column_info.get_gdf_geoid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the GEOID column name in user geography file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user_gdf</strong> (<em>GeoDataFrame</em>) – Geography file provided by user, opened outside this function as GDF.</p></li>
+<li><p><strong>user_txt</strong> (<em>DataFrame</em>) – User inputted district assignment file.
+Contains two columns: geography level, district assignment.
+Geography level in user_txt must match user_geo_type.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>GEOID column name</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>String</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">get_gdf_geoid</span><span class="p">(</span><span class="n">gdf_placeds</span><span class="p">,</span> <span class="n">plan5</span><span class="p">)</span>
+<span class="go">&#39;GEOid&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="get_column_info.get_column_info.get_state_geoid">
+<span class="sig-name descname"><span class="pre">get_state_geoid</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#get_column_info.get_column_info.get_state_geoid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the GEOID column name and state code.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>user_txt</strong> (<em>DataFrame</em>) – User inputted district assignment file.
+Contains two columns: geography level, district assignment.
+Geography level in user_txt must match user_geo_type.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ol class="arabic simple">
+<li><p>GEOID column name</p></li>
+<li><p>2 digit state code</p></li>
+</ol>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">get_state_geoid</span><span class="p">(</span><span class="n">plan10</span><span class="p">)</span>
+<span class="go">[&#39;geoid&#39;, &#39;42&#39;]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="get_column_info.get_column_info.split_string">
+<span class="sig-name descname"><span class="pre">split_string</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#get_column_info.get_column_info.split_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the first 2 digits of a string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>x</strong> (<em>string</em>) – </p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>String</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">split_string</span><span class="p">(</span><span class="s1">&#39;421011902&#39;</span><span class="p">)</span>
+<span class="go">&#39;42&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/get_column_info.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Redistricting Plan Scorer 0.0.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">get_column_info module</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2023, Claire Craig and Joshua Murbarger.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.0.2.
+    </div>
+  </body>
+</html>

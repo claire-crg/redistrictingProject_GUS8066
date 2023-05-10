@@ -1,0 +1,174 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>partisan_fairness module &#8212; Redistricting Plan Scorer 0.0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/nature.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Redistricting Plan Scorer 0.0.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">partisan_fairness module</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-partisan_fairness">
+<span id="partisan-fairness-module"></span><h1>partisan_fairness module<a class="headerlink" href="#module-partisan_fairness" title="Permalink to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="partisan_fairness.partisan_fairness">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">partisan_fairness.</span></span><span class="sig-name descname"><span class="pre">partisan_fairness</span></span><a class="headerlink" href="#partisan_fairness.partisan_fairness" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="partisan_fairness.partisan_fairness.eg">
+<span class="sig-name descname"><span class="pre">eg</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#partisan_fairness.partisan_fairness.eg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the efficiency gap (EG) based on the provided DataFrame.</p>
+<p>Efficiency Gap indicates difference between the two parties total votes cast
+for an unsuccessful candidate AND any vote surplus for a successful candidate
+(both considered wasted votes) over all districts for each party divided by
+total votes.</p>
+<p>Reference: Stephanopoulos, Nicholas and McGhee, Eric,
+Partisan Gerrymandering and the Efficiency Gap (October 1, 2014).
+82 University of Chicago Law Review, 831 (2015), U of Chicago,
+Public Law Working Paper No. 493,
+Available at SSRN: <a class="reference external" href="https://ssrn.com/abstract=2457468">https://ssrn.com/abstract=2457468</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>DataFrame</em>) – DataFrame containing election data from historic_election_data with</p></li>
+<li><p><strong>'dem_wasted'</strong> – </p></li>
+<li><p><strong>'gop_wasted'</strong> – </p></li>
+<li><p><strong>columns.</strong> (<em>and 'total'</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Efficiency gap value.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="partisan_fairness.partisan_fairness.lmt">
+<span class="sig-name descname"><span class="pre">lmt</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#partisan_fairness.partisan_fairness.lmt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the lopsided margins test (LMT) based on the provided DataFrame.</p>
+<p>Metric is a t-test conducted on degree of winning voteshare of district totaled.</p>
+<p>Reference: Sam Wang, “Three Tests for Practical Evaluation of Partisan Gerrymandering,”
+Stanford Law Journal, 16, June 2016. Available at:
+<a class="reference external" href="https://www.stanfordlawreview.org/print/article/three-tests-for-practical-evaluation-ofpartisan-gerrymandering/">https://www.stanfordlawreview.org/print/article/three-tests-for-practical-evaluation-ofpartisan-gerrymandering/</a>)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>df</strong> (<em>DataFrame</em>) – DataFrame from fairness module containing election data with party voteshare.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Lopsided margins test value.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="partisan_fairness.partisan_fairness.mean_median">
+<span class="sig-name descname"><span class="pre">mean_median</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#partisan_fairness.partisan_fairness.mean_median" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the mean-median difference (MMD) based on the provided DataFrame.</p>
+<p>Score indicates difference between a party’s  median voteshaer minus its mean
+for all districts. According to planscore.org, “When the mean and the median
+diverge significantly, the district distribution is skewed in favor of one
+party and against its opponent.”</p>
+<p>Reference: Mcdonald, Michael &amp; Best, Robin. (2015). Unfair Partisan Gerrymanders
+in Politics and Law: A Diagnostic Applied to Six Cases. Election Law Journal:
+Rules, Politics, and Policy. 14. 312-330. 10.1089/elj.2015.0358.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>DataFrame</em>) – DataFrame from fairness module containing election data</p></li>
+<li><p><strong>voteshare.</strong> (<em>with party</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Mean-median difference value.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/partisan_fairness.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Redistricting Plan Scorer 0.0.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">partisan_fairness module</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2023, Claire Craig and Joshua Murbarger.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.0.2.
+    </div>
+  </body>
+</html>
