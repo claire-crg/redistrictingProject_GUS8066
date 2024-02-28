@@ -11,7 +11,7 @@ Make sure you downloaded the file, 'requirements.txt'. In your console, run the 
 
 Step 1. Run the executable or gui.py from the top level of the repository.
 
-Step 2. Select the path to the folder containing the plans. Two plans have been provide for testing. They are located in /data.
+Step 2. Select the path to the folder containing the plans. Two plans have been provided for testing. They are located in /data.
 
 Step 3. Select a shapefile or geopackage if desired (one has been supplied in /data: vtd_gdf.gpkg.)
 
